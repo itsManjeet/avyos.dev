@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+
+  <title>Avyos | Modern Operating System Architecture</title>
+  <meta
+    name="description"
+    content="Avyos is a ground-up operating system architecture built in Go, with an immutable foundation, capability-first security, and predictable lifecycle management."
+  />
+  <meta name="go-import" content="avyos.dev git https://github.com/itsmanjeet/avyos" />
+  <meta
+    name="go-source"
+    content="avyos.dev https://github.com/itsmanjeet/avyos https://github.com/itsmanjeet/avyos/tree/main{/dir} https://github.com/itsmanjeet/avyos/blob/main{/dir}/{file}#L{line}"
+  />
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Avaya home">
+        <img class="brand-logo" src="assets/logo.png" alt="" width="40" height="40" />
+        <span lang="hi">अव्यय</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#preview">Preview</a>
+        <a href="#features">Features</a>
+        <a href="#security">Security</a>
+        <a href="#faq">FAQ</a>
+        <a href="#technical">Architecture</a>
+        <a href="#status">Status</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-release" href="https://github.com/itsmanjeet/avyos">Source Code</a>
+        <a class="btn btn-primary" href="#get-started">Get Started</a>
+
+        <button class="hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-panel soft">
+      <a href="#preview">Preview</a>
+      <a href="#features">Features</a>
+      <a href="#security">Security</a>
+      <a href="#faq">FAQ</a>
+      <a href="#technical">Architecture</a>
+      <a href="#status">Status</a>
+      <div class="drawer-actions">
+        <a class="btn btn-release" href="https://github.com/itsmanjeet/avyos">Source Code</a>
+        <a class="btn btn-primary" href="#get-started">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <div class="alpha-warning-wrap" role="note" aria-label="Experimental status warning">
+      <div class="container">
+        <p class="alpha-warning">
+          <strong>Warning:</strong> Avyos is experimental alpha software and is not ready for production use. Use only in
+          testing or non-critical environments.
+        </p>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-left soft">
+
+          <h1 class="hero-title">A modern OS foundation for secure, predictable computing.</h1>
+          <p class="hero-copy">
+            Avyos is built in Go on top of Linux primitives. It rethinks the system layer for clarity, stronger isolation,
+            and long-term maintainability without carrying legacy Unix assumptions forward.
+          </p>
+
+          <div class="hero-chips">
+            <span class="pill"><span class="dot"></span> Immutable core</span>
+            <span class="pill"><span class="dot"></span> Capability identity</span>
+            <span class="pill"><span class="dot"></span> Isolated compatibility</span>
+          </div>
+
+          <div class="hero-actions" id="get-started">
+            <a class="btn btn-release" href="#try">Try it!</a>
+            <a class="btn btn-primary" href="#technical">Read Architecture Overview</a>
+            <a class="btn btn-ghost" href="#features">Explore Highlights</a>
+          </div>
+
+          <div class="divider-line"></div>
+
+          <p class="hero-note">Built for teams that value clarity, reliability, and operational confidence.</p>
+        </div>
+
+        <aside class="hero-right card" aria-label="Project summary">
+          <div class="hero-callout">
+            <div class="callout-head">
+              <img class="callout-logo" src="assets/logo.png" alt="" width="36" height="36" />
+              <h2>Clear boundaries. Predictable operations.</h2>
+            </div>
+            <p>
+              From boot to services, Avyos keeps trust boundaries explicit and system behavior easier to reason about.
+            </p>
+            <div class="mini-actions">
+              <a class="btn btn-primary" href="#status">Project Status</a>
+              <a class="btn btn-ghost" href="#security">Security Model</a>
+            </div>
+          </div>
+
+          <ul class="summary-list">
+            <li><span class="dot"></span> Go-native system layer above Linux primitives</li>
+            <li><span class="dot"></span> Capability-first access model</li>
+            <li><span class="dot"></span> Isolated Linux compatibility mode</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="preview" class="section-block preview-section">
+      <div class="container">
+        <div class="preview-shell card">
+          <div class="preview-head">
+            <p class="preview-eyebrow">Desktop Preview</p>
+            <h2 class="section-title preview-title">How It Looks</h2>
+            <p class="section-sub preview-sub">
+              Early Avyos desktop preview.
+            </p>
+          </div>
+
+          <div class="preview-gallery" id="previewGallery">
+            <figure class="mac-mockup">
+              <div class="mac-screen">
+                <div class="mac-notch" aria-hidden="true"></div>
+                <button
+                  class="preview-open"
+                  id="previewOpen"
+                  type="button"
+                  aria-label="Open image preview"
+                  title="Click to preview"
+                >
+                  <img
+                    id="previewImage"
+                    src="assets/interface.png"
+                    alt="Avyos interface preview"
+                    loading="lazy"
+                    width="1920"
+                    height="1080"
+                  />
+                </button>
+                <button class="slide-nav prev" id="previewPrev" type="button" aria-label="Previous preview image">‹</button>
+                <button class="slide-nav next" id="previewNext" type="button" aria-label="Next preview image">›</button>
+              </div>
+              <div class="mac-base" aria-hidden="true">
+                <span class="mac-trackpad"></span>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container card why-wrap">
+        <h2 class="section-title center">Designed from first principles.</h2>
+        <p class="section-sub center">
+          Avyos starts with a clean model where trust, identity, and lifecycle behavior are intentional from day one.
+        </p>
+
+        <div class="why-grid">
+          <div class="why-column">
+            <h3>Where traditional systems struggle</h3>
+            <ul class="list">
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                Critical platform logic and day-to-day change often blur into one surface.
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                Coarse identity models make least-privilege access difficult to maintain.
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                Incremental layering creates drift and reduces long-term operational clarity.
+              </li>
+            </ul>
+          </div>
+
+          <div class="why-column">
+            <h3>How Avyos approaches it</h3>
+            <ul class="list">
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                An immutable foundation keeps system behavior stable and easier to audit.
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                Runtime change is controlled rather than implicit and ad hoc.
+              </li>
+              <li>
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                Capability-first identity supports practical least-privilege boundaries across services and apps.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout-strip">
+          <p><strong>Predictability is the baseline.</strong> If behavior is unclear, redesign it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section-block">
+      <div class="container">
+        <h2 class="section-title">Features</h2>
+        <p class="section-sub">A clear system model focused on reliability, security, and maintainability.</p>
+
+        <div class="grid features-grid">
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Base</div>
+            <h3>Immutable trusted core</h3>
+            <p>The system image is read-only by default, reducing drift and preserving integrity.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Layout</div>
+            <h3>Clear system model</h3>
+            <p>The platform separates foundational system behavior from operational change.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Identity</div>
+            <h3>Capability-first identity</h3>
+            <p>Authorization is explicit, composable, and designed around least privilege.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Updates</div>
+            <h3>Transactional upgrades</h3>
+            <p>Apply updates atomically and roll back quickly when verification fails.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Privacy</div>
+            <h3>Privacy-first defaults</h3>
+            <p>Telemetry is disabled by default, and diagnostics remain transparent and opt-in.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Surface</div>
+            <h3>Smaller trusted surface</h3>
+            <p>Fewer base services improve auditability and reduce operational surprises.</p>
+          </article>
+
+          <article class="feature">
+            <div class="tag"><span class="spark"></span> Compatibility</div>
+            <h3>Linux compatibility mode</h3>
+            <p>Run existing Linux applications in isolated environments while keeping the core platform independent.</p>
+          </article>
+
+          <article class="quote-card">
+            <p>
+              "Security and reliability should emerge from design, not from patchwork."
+            </p>
+            <span>Architecture principle</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="security" class="section-block">
+      <div class="container card security-wrap">
+        <h2 class="section-title">Security as a built-in property</h2>
+        <p class="section-sub">Security is designed in from day one, not added later.</p>
+
+        <div class="security-grid">
+          <div class="principles">
+            <article class="principle">
+              <h3>Stable trusted foundation</h3>
+              <p>Core system components stay read-only, and changes remain intentional and reversible.</p>
+            </article>
+            <article class="principle">
+              <h3>Capability-native identity</h3>
+              <p>Capabilities define what software can do, replacing broad roles with focused permissions.</p>
+            </article>
+            <article class="principle">
+              <h3>Boundary-first execution</h3>
+              <p>Service and app boundaries are explicit, keeping behavior understandable and enforceable.</p>
+            </article>
+          </div>
+
+          <div class="guarantees">
+            <h3>Design guarantees</h3>
+            <ul>
+              <li>Immutable system foundation separated from runtime change</li>
+              <li>Capability-driven least-privilege access model</li>
+              <li>Isolated execution boundaries for services and applications</li>
+              <li>Transactional upgrades with rollback support</li>
+              <li>Minimal default services in the trusted base</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section-block">
+      <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <p class="section-sub">Clear answers to common questions.</p>
+
+        <div class="faq-wrap">
+          <div class="card accordion">
+            <article class="qa">
+              <button class="q" type="button" aria-expanded="false">
+                <span>Is Avyos a Linux distribution? <small>(Kernel: yes. System architecture: redesigned.)</small></span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="a">
+                <div class="a-inner">
+                  Avyos runs on the Linux kernel but redesigns the operating system layer: layout, identity boundaries,
+                  state routing, and trust assumptions.
+                </div>
+              </div>
+            </article>
+
+            <article class="qa">
+              <button class="q" type="button" aria-expanded="false">
+                <span>What makes Avyos "redesigned"?</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="a">
+                <div class="a-inner">
+                  Avyos replaces legacy OS assumptions with a modern model: immutable foundation, capability-first identity,
+                  and clear boundaries between trusted platform behavior and runtime change.
+                </div>
+              </div>
+            </article>
+
+            <article class="qa">
+              <button class="q" type="button" aria-expanded="false">
+                <span>Can I run existing Linux applications?</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="a">
+                <div class="a-inner">
+                  Yes. Linux applications run in isolated compatibility environments so existing software can work without
+                  redefining the core platform architecture.
+                </div>
+              </div>
+            </article>
+
+            <article class="qa">
+              <button class="q" type="button" aria-expanded="false">
+                <span>Does Avyos collect telemetry?</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="a">
+                <div class="a-inner">
+                  Not by default. Any diagnostics are opt-in, transparent, and governed by explicit policy.
+                </div>
+              </div>
+            </article>
+
+            <article class="qa">
+              <button class="q" type="button" aria-expanded="false">
+                <span>What is included in the first release?</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="a">
+                <div class="a-inner">
+                  v0, code-named "Virtual Monster" (Alpha), focuses on the core lifecycle, trusted base, and practical
+                  developer workflows.
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="card arch-card">
+            <h3>Architecture snapshot</h3>
+            <div class="stack">
+              <div class="layer"><span>Applications</span><span class="hint">isolated workloads and services</span></div>
+              <div class="layer core"><span>Avyos Core</span><span class="hint">policy, lifecycle, and system model</span></div>
+              <div class="layer kernel"><span>Linux Kernel</span><span class="hint">low-level primitives</span></div>
+            </div>
+
+            <ul class="arch-bullets">
+              <li>Immutable platform foundation for consistency and trust</li>
+              <li>Capability-first access control across system components</li>
+              <li>Clear separation between platform core and compatibility layers</li>
+              <li>Service-oriented architecture managed by Go-native system tooling</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="technical" class="section-block">
+      <div class="container">
+        <h2 class="section-title">Architecture overview</h2>
+        <p class="section-sub">
+          Avyos is built in Go above Linux primitives with modern identity, predictable lifecycle behavior, and clear
+          compatibility boundaries.
+        </p>
+        <p class="arch-notice" role="note" aria-label="Architecture implementation policy">
+          <strong>Implementation policy:</strong>
+          Keep the full system in pure Go with <code>CGO_ENABLED=0</code>. Prioritize a design that is simple to
+          develop, maintain, and use. Compatibility-layer distro resources are allowed, but must stay optional and
+          never become a hard dependency for core platform behavior.
+        </p>
+
+        <div class="arch-layout">
+          <article class="card arch-panel">
+            <div class="arch-panel-head">
+              <div>
+                <p class="arch-kicker">Reference architecture</p>
+                <h3>Layered system model</h3>
+              </div>
+              <a class="arch-doc-link" href="architecture.md">Open architecture.md</a>
+            </div>
+            <p class="arch-caption">Trusted boundaries and runtime contracts from kernel to user-facing workloads.</p>
+
+            <div class="arch-layer-list">
+              <section class="arch-layer-item auth-l3">
+                <div class="arch-layer-head">
+                  <h4>Compatibility layer</h4>
+                  <div class="arch-auth-visual level-3" role="img" aria-label="Auth level: Isolated Compatibility">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <p class="arch-layer-detail">
+                  <span>Distro compatibility runtime in strict isolation, with no access to the outside host environment.</span>
+                  <span class="arch-privilege-label">Privilege: Isolated</span>
+                </p>
+              </section>
+              <section class="arch-layer-item auth-l1">
+                <div class="arch-layer-head">
+                  <h4>Application layer</h4>
+                  <div class="arch-auth-visual level-1" role="img" aria-label="Auth level: User">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <p class="arch-layer-detail">
+                  <span>User-facing apps and sessions with constrained access to platform services.</span>
+                  <span class="arch-privilege-label">Privilege: User</span>
+                </p>
+              </section>
+              <section class="arch-layer-item auth-l2">
+                <div class="arch-layer-head">
+                  <h4>Runtime layer</h4>
+                  <div class="arch-auth-visual level-2" role="img" aria-label="Auth level: Service">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <p class="arch-layer-detail">
+                  <span>Shared runtime services for graphics, display, and session orchestration.</span>
+                  <span class="arch-privilege-label">Privilege: Service</span>
+                </p>
+              </section>
+              <section class="arch-layer-item auth-l4">
+                <div class="arch-layer-head">
+                  <h4>Core layer</h4>
+                  <div class="arch-auth-visual level-4" role="img" aria-label="Auth level: Core Platform">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <p class="arch-layer-detail">
+                  <span>Platform control services for boot, policy, identity, and lifecycle management.</span>
+                  <span class="arch-privilege-label">Privilege: Platform</span>
+                </p>
+              </section>
+              <section class="arch-layer-item auth-l5">
+                <div class="arch-layer-head">
+                  <h4>Kernel base</h4>
+                  <div class="arch-auth-visual level-5" role="img" aria-label="Auth level: Kernel">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <p class="arch-layer-detail">
+                  <span>Kernel primitives and hardware control for process, memory, and network boundaries.</span>
+                  <span class="arch-privilege-label">Privilege: Kernel</span>
+                </p>
+              </section>
+            </div>
+
+            <div class="arch-compat-row">
+              <div class="arch-compat-item">Compatibility: Wayland bridge and distro layer with outside-environment access blocked by default</div>
+              <div class="arch-compat-item">Target hosts: QEMU arm64 and amd64, hardware enablement in progress</div>
+            </div>
+          </article>
+
+          <aside class="card arch-panel arch-catalog-panel">
+            <h3>Subsystem catalog</h3>
+            <div class="arch-catalog-list">
+              <article class="arch-catalog-item">
+                <h4>Boot and lifecycle</h4>
+                <p>Deterministic startup, supervised services, and transactional state transitions.</p>
+              </article>
+              <article class="arch-catalog-item">
+                <h4>Graphics stack</h4>
+                <p>Custom protocol and display server with a dedicated graphics framework path.</p>
+              </article>
+              <article class="arch-catalog-item">
+                <h4>Networking baseline</h4>
+                <p>Static IPv4 Ethernet support with controlled expansion into broader networking.</p>
+              </article>
+              <article class="arch-catalog-item">
+                <h4>Compatibility surfaces</h4>
+                <p>Wayland bridge and containerized distro workloads isolated from platform core.</p>
+              </article>
+              <article class="arch-catalog-item">
+                <h4>Release engineering</h4>
+                <p>Build pipeline and v0 release scope tracking with staged capability rollout.</p>
+              </article>
+            </div>
+          </aside>
+        </div>
+
+        <div class="arch-principles">
+          <article class="arch-principle-item"><b>Deterministic lifecycle</b><span>Boot, service control, and recovery are predictable.</span></article>
+          <article class="arch-principle-item"><b>Capability boundaries</b><span>Privileged actions are explicit, scoped, and auditable.</span></article>
+          <article class="arch-principle-item"><b>Layered contracts</b><span>Kernel, core, runtime, and compatibility stay decoupled.</span></article>
+          <article class="arch-principle-item"><b>Operational clarity</b><span>Architecture remains legible for contributors and operators.</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="status" class="section-block">
+      <div class="container">
+        <h2 class="section-title">Project status</h2>
+        <p class="section-sub">v0 "Virtual Monster" timeline with completed milestones and remaining release scope.</p>
+
+        <article class="card status-hero">
+          <p class="status-kicker">v0 release scope</p>
+          <h3>Execution snapshot for Alpha</h3>
+          <div id="statusSummary" class="status-meters"></div>
+        </article>
+
+        <p id="milestoneHelp" class="milestone-help"></p>
+        <div id="milestoneBoard" class="milestone-board"></div>
+
+        <div class="card cta-strip">
+          <div>
+            <h3>Build the redesigned OS with us.</h3>
+            <p>Start with docs, review the architecture, or contribute implementation work.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-ghost" href="https://github.com/itsmanjeet/avyos/releases">Releases</a>
+            <a class="btn btn-ghost" href="https://github.com/itsmanjeet/avyos/issues">Issues</a>
+            <a class="btn btn-primary" href="https://github.com/itsmanjeet/avyos/discussions">Discussions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="try" class="section-block">
+      <div class="container">
+        <div class="card try-wrap">
+          <h2 class="section-title">Try Avyos</h2>
+          <p class="section-sub">
+            Spin up the latest Avyos image locally in minutes.
+          </p>
+
+          <div class="try-grid">
+            <article class="try-panel">
+              <p class="try-kicker">Install First</p>
+              <div class="tool-grid">
+                <a class="tool-link" href="https://go.dev/dl/" target="_blank" rel="noopener noreferrer">
+                  <img
+                    class="tool-icon"
+                    src="https://www.google.com/s2/favicons?domain=go.dev&sz=64"
+                    alt="Go icon"
+                    width="28"
+                    height="28"
+                  />
+                  <span class="tool-meta">
+                    <b>Go (latest)</b>
+                    <span>go.dev/dl</span>
+                  </span>
+                </a>
+
+                <a class="tool-link" href="https://www.qemu.org/download/" target="_blank" rel="noopener noreferrer">
+                  <img
+                    class="tool-icon"
+                    src="https://www.google.com/s2/favicons?domain=qemu.org&sz=64"
+                    alt="QEMU icon"
+                    width="28"
+                    height="28"
+                  />
+                  <span class="tool-meta">
+                    <b>QEMU</b>
+                    <span>qemu.org/download</span>
+                  </span>
+                </a>
+              </div>
+            </article>
+
+            <article class="try-panel">
+              <p class="try-kicker">Run</p>
+              <p class="try-step">Execute this command:</p>
+              <div class="try-cmd mono">go run avyos.dev/tools/runimage@latest</div>
+              <p class="try-note">The runner fetches the latest image and launches it in QEMU.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div class="footer-links">
+        <a href="https://github.com/itsmanjeet/avyos">GitHub Project</a>
+        <a href="https://github.com/itsmanjeet/avyos/releases">Releases</a>
+        <a href="https://github.com/itsmanjeet/avyos/discussions">Discussions</a>
+        <a href="https://github.com/itsmanjeet/avyos/issues">Issues</a>
+      </div>
+      <p class="footer-made">Made with ❤️ in India</p>
+    </div>
+  </footer>
+
+  <div class="preview-lightbox" id="previewLightbox" aria-hidden="true">
+    <div class="preview-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Preview image dialog">
+      <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close preview">×</button>
+      <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Previous preview image">‹</button>
+      <figure class="lightbox-figure">
+        <img
+          id="lightboxImage"
+          src="assets/interface.png"
+          alt="Avyos interface preview"
+          width="1920"
+          height="1080"
+        />
+      </figure>
+      <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Next preview image">›</button>
+    </div>
+  </div>
+</body>
+</html>

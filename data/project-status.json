@@ -1,0 +1,125 @@
+{
+  "helpText": "Grouped by domain. Hover or tap a card to expand. Green tick = done, grey dash = not done.",
+  "groups": [
+    {
+      "title": "Core Infrastructure",
+      "status": "complete",
+      "items": [
+        {
+          "title": "Coreutils",
+          "status": "done",
+          "description": "Core command set for system operations and developer workflows.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd"
+        },
+        {
+          "title": "Init system",
+          "status": "done",
+          "description": "PID 1 lifecycle management and supervised service startup.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd/init"
+        },
+        {
+          "title": "Sutra IPC",
+          "status": "done",
+          "description": "Service-to-service messaging bus and runtime communication layer.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/pkg/sutra"
+        },
+        {
+          "title": "Build pipeline",
+          "status": "done",
+          "description": "Image build flow for compile, packaging, and boot artifact generation.",
+          "docs": "https://github.com/itsmanjeet/avyos/blob/main/Makefile"
+        }
+      ]
+    },
+    {
+      "title": "Graphics",
+      "status": "complete",
+      "items": [
+        {
+          "title": "Display protocol",
+          "status": "done",
+          "description": "Native display protocol layer for Avyos compositor and clients.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+        },
+        {
+          "title": "Graphics framework",
+          "status": "done",
+          "description": "Rendering and UI primitives for system graphics and app surfaces.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/pkg/ui"
+        },
+        {
+          "title": "Display server",
+          "status": "done",
+          "description": "Compositor service handling session rendering and window composition.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/services/desktop"
+        },
+        {
+          "title": "System + user apps",
+          "status": "done",
+          "description": "User-facing application layer delivered with the desktop baseline.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/apps"
+        }
+      ]
+    },
+    {
+      "title": "Networking",
+      "status": "basic",
+      "items": [
+        {
+          "title": "Static IPv4 Ethernet",
+          "status": "done",
+          "description": "Basic static IPv4 Ethernet setup is available for current runtime use.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd/net"
+        }
+      ]
+    },
+    {
+      "title": "Audio",
+      "status": "off",
+      "items": [
+        {
+          "title": "None",
+          "status": "not",
+          "description": "Audio stack is not implemented yet for v0 release scope.",
+          "docs": "https://github.com/itsmanjeet/avyos/issues?q=is%3Aissue+audio"
+        }
+      ]
+    },
+    {
+      "title": "Compatibility (QA)",
+      "status": "basic",
+      "items": [
+        {
+          "title": "Wayland bridge",
+          "status": "not",
+          "description": "Bridge path under QA to map Wayland clients into Avyos display flow.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+        },
+        {
+          "title": "Distro container",
+          "status": "not",
+          "description": "Container-based compatibility path under QA for Linux distribution workloads.",
+          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+        }
+      ]
+    },
+    {
+      "title": "Hardware",
+      "status": "basic",
+      "items": [
+        {
+          "title": "QEMU arm64",
+          "status": "done",
+          "description": "Primary virtualization target for arm64 build and boot validation.",
+          "docs": "architecture.md"
+        },
+        {
+          "title": "QEMU amd64",
+          "status": "done",
+          "description": "Secondary virtualization target for amd64 compatibility and runtime testing.",
+          "docs": "architecture.md"
+        }
+      ]
+    }
+  ]
+}
