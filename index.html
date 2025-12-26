@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AvyOS Immutable. Fast. Secure.</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Tailwind Config -->
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            avy: {
+                                accent: "#3b82f6",
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            /* Fade + slide */
+            .animate-fade-up {
+                animation: fadeUp 0.8s ease-out both;
+            }
+
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(24px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Stagger delay helpers */
+            .delay-100 {
+                animation-delay: 0.1s;
+            }
+
+            .delay-200 {
+                animation-delay: 0.2s;
+            }
+
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+
+            .delay-400 {
+                animation-delay: 0.4s;
+            }
+
+            /* Respect reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
+
+        <!-- Dark / Light Mode Script -->
+        <script>
+            if (
+                localStorage.theme === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+
+            function toggleTheme() {
+                if (document.documentElement.classList.contains("dark")) {
+                    document.documentElement.classList.remove("dark");
+                    localStorage.theme = "light";
+                } else {
+                    document.documentElement.classList.add("dark");
+                    localStorage.theme = "dark";
+                }
+            }
+        </script>
+    </head>
+
+    <body
+        class="bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-200 transition-colors antialiased"
+    >
+        <!-- Theme Toggle -->
+        <div class="fixed top-4 right-4 z-50">
+            <button
+                onclick="toggleTheme()"
+                class="px-4 py-2 rounded-lg border bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 hover:scale-105 transition"
+            >
+                <span class="dark:hidden">☀️</span>
+                <span class="hidden dark:inline">🌙</span>
+            </button>
+        </div>
+
+        <!-- HERO -->
+        <section class="min-h-screen flex items-center px-6">
+            <div
+                class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center"
+            >
+                <!-- Left Content -->
+                <div>
+                    <h1 class="text-5xl md:text-6xl font-bold animate-fade-up">
+                        Avy<span class="text-avy-accent">OS</span>
+                    </h1>
+
+                    <p
+                        class="mt-4 text-xl text-slate-500 dark:text-slate-400 animate-fade-up delay-100"
+                    >
+                        Immutable. Lightweight. Blazing Fast.
+                    </p>
+
+                    <p class="mt-6 text-lg max-w-xl animate-fade-up delay-200">
+                        AvyOS is an immutable Linux distribution built from
+                        scratch using OSTree, optimized for speed, stability,
+                        and a beautifully customized XFCE desktop.
+                    </p>
+
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a
+                            href="#"
+                            class="px-6 py-3 rounded-lg bg-avy-accent text-slate-900 font-semibold hover:opacity-90"
+                        >
+                            Download (Coming Soon)
+                        </a>
+                        <a
+                            href="#"
+                            class="px-6 py-3 rounded-lg border border-slate-400 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-900"
+                        >
+                            Documentation
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Laptop Mockup -->
+                <div
+                    class="relative flex justify-center animate-fade-up delay-300"
+                >
+                    <!-- Glow -->
+                    <div
+                        class="absolute -inset-10 bg-avy-accent/20 blur-3xl rounded-full"
+                    ></div>
+
+                    <!-- Laptop Body -->
+                    <div class="relative w-full max-w-xl">
+                        <!-- Screen -->
+                        <div
+                            class="rounded-t-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-black shadow-2xl"
+                        >
+                            <img
+                                src="screenshots/laptop-mockup.png"
+                                alt="AvyOS running on laptop"
+                                class="w-full aspect-video object-cover"
+                            />
+                        </div>
+
+                        <!-- Keyboard Base -->
+                        <div
+                            class="h-6 bg-slate-300 dark:bg-slate-700 rounded-b-xl border border-t-0 border-slate-300 dark:border-slate-700"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section
+            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
+        >
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold mb-6">What is AvyOS?</h2>
+                <p
+                    class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed"
+                >
+                    AvyOS is an independent operating system based on Linux
+                    kernel designed for long-term stability and reliability. The
+                    name comes from the Sanskrit term
+                    <span class="font-semibold">Avyaya (अव्यय)</span>, meaning
+                    <i>“unchanging”</i> or <i>“immutable.”</i> AvyOS protects
+                    the core system from accidental changes and delivers safe,
+                    predictable updates using OSTree.
+                </p>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="py-20 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-12 text-center">
+                    Core Features
+                </h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Immutable Core
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            OSTree-based immutable system that prevents
+                            accidental breakage.
+                        </p>
+                    </div>
+
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Extreme Performance
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Built from scratch and optimized for real,
+                            noticeable speed.
+                        </p>
+                    </div>
+
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Customized XFCE
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Lightweight, responsive, and beautifully tuned
+                            desktop environment.
+                        </p>
+                    </div>
+
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Flatpak & Distrobox
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Run apps from any distribution without touching the
+                            base system.
+                        </p>
+                    </div>
+
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Sysroot Extensions
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Add drivers and desktops safely without compromising
+                            stability.
+                        </p>
+                    </div>
+
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Secure by Design
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Immutable architecture enables safe rollbacks and
+                            recovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="py-20 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-4 text-center">
+                    AvyOS in Action
+                </h2>
+
+                <p
+                    class="text-center text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto"
+                >
+                    A beautifully customized XFCE desktop lightweight,
+                    responsive, and optimized for speed without sacrificing
+                    aesthetics.
+                </p>
+
+                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Screenshot Card -->
+                    <div
+                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
+                    >
+                        <img
+                            src="screenshots/desktop-1.png"
+                            alt="AvyOS desktop overview"
+                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg">
+                                Desktop Overview
+                            </h3>
+                            <p
+                                class="text-slate-600 dark:text-slate-400 text-sm"
+                            >
+                                Clean XFCE layout with custom theming and fast
+                                panel response.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
+                    >
+                        <img
+                            src="screenshots/desktop-2.png"
+                            alt="AvyOS application launcher"
+                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg">
+                                Application Launcher
+                            </h3>
+                            <p
+                                class="text-slate-600 dark:text-slate-400 text-sm"
+                            >
+                                Fast, minimal app menu designed for keyboard and
+                                mouse users.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
+                    >
+                        <img
+                            src="screenshots/desktop-3.png"
+                            alt="AvyOS terminal and performance"
+                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg">
+                                Speed & Performance
+                            </h3>
+                            <p
+                                class="text-slate-600 dark:text-slate-400 text-sm"
+                            >
+                                Instant app launches and low resource usage on
+                                real hardware.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY -->
+        <section
+            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
+        >
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8">Why AvyOS?</h2>
+
+                <ul
+                    class="space-y-5 text-lg text-slate-700 dark:text-slate-300"
+                >
+                    <li>
+                        <span class="font-semibold">Secure by default</span>
+                        immutable system design reduces attack surface and
+                        prevents accidental system modifications.
+                    </li>
+
+                    <li>
+                        <span class="font-semibold">Immutable by design</span>
+                        a stable, predictable core with support for safe,
+                        controlled extensions.
+                    </li>
+
+                    <li>
+                        <span class="font-semibold">Performance-focused</span>
+                        optimized for speed, responsiveness, and low resource
+                        usage.
+                    </li>
+
+                    <li>
+                        <span class="font-semibold">Daily-driver ready</span>
+                        practical for everyday use, development, and long-term
+                        reliability.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- IMMUTABLE EXPLAINED -->
+        <section
+            class="py-24 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
+        >
+            <div class="max-w-7xl mx-auto">
+                <!-- Heading -->
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
+                    Immutable, Explained
+                </h2>
+
+                <!-- Core Explanation -->
+                <p
+                    class="text-center text-lg text-slate-600 dark:text-slate-400 max-w-4xl mx-auto mb-14"
+                >
+                    Immutable Linux distributions keep the core operating system
+                    <span class="font-semibold">read-only and consistent</span>.
+                    Instead of modifying the live system package by package, the
+                    OS is built and tested as a complete image and updated
+                    atomically. This prevents partial upgrades, dependency
+                    conflicts, and system breakage.
+                </p>
+
+                <!-- Pros & Cons -->
+                <div class="max-w-5xl mx-auto mb-20 grid gap-8 md:grid-cols-2">
+                    <!-- Pros -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3
+                            class="text-xl font-semibold mb-4 text-emerald-600 dark:text-emerald-400"
+                        >
+                            Advantages
+                        </h3>
+
+                        <ul
+                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
+                        >
+                            <li>Predictable and consistent system state</li>
+                            <li>No partial upgrades or broken dependencies</li>
+                            <li>Atomic updates with safe rollback</li>
+                            <li>Stronger stability and reliability</li>
+                            <li>Lower risk of accidental system damage</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cons -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3
+                            class="text-xl font-semibold mb-4 text-amber-600 dark:text-amber-400"
+                        >
+                            Trade-offs
+                        </h3>
+
+                        <ul
+                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
+                        >
+                            <li>Core system cannot be modified directly</li>
+                            <li>Updates typically require a reboot</li>
+                            <li>Different workflow than traditional distros</li>
+                            <li>Less suitable for heavy system tinkering</li>
+                            <li>
+                                Larger updates due to full image replacement
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bridge -->
+                <p
+                    class="text-center text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-16"
+                >
+                    AvyOS embraces these trade-offs while restoring flexibility
+                    through Flatpak, Distrobox, and controlled system extensions
+                    keeping the base stable without limiting user workflows.
+                </p>
+
+                <!-- Comparison -->
+                <div class="grid gap-10 lg:grid-cols-3">
+                    <!-- Package-Based -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-4">
+                            Package-Based Distributions
+                        </h3>
+
+                        <ul
+                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
+                        >
+                            <li>System assembled package by package</li>
+                            <li>Independent package updates</li>
+                            <li>Dependency mismatches are common</li>
+                            <li>Partial upgrades can break the system</li>
+                        </ul>
+
+                        <div
+                            class="mt-6 text-sm text-red-600 dark:text-red-400"
+                        >
+                            ❌ Inconsistent system state
+                        </div>
+                    </div>
+
+                    <!-- Frozen -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-4">
+                            Tradition Immutable Distro
+                        </h3>
+
+                        <ul
+                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
+                        >
+                            <li>Packages frozen at fixed versions</li>
+                            <li>Reduced update frequency</li>
+                            <li>Still built as individual packages</li>
+                            <li>Inconsistencies can accumulate over time</li>
+                        </ul>
+
+                        <div
+                            class="mt-6 text-sm text-amber-600 dark:text-amber-400"
+                        >
+                            ⚠ More stable, but not fully consistent
+                        </div>
+                    </div>
+
+                    <!-- AvyOS -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-avy-accent/60 ring-1 ring-avy-accent/40"
+                    >
+                        <h3 class="text-xl font-semibold mb-4 text-avy-accent">
+                            AvyOS (Image-Based Immutable)
+                        </h3>
+
+                        <ul
+                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
+                        >
+                            <li>Entire OS built as a single image</li>
+                            <li>All components tested together</li>
+                            <li>Atomic updates only</li>
+                            <li>Reliable rollback on failure</li>
+                        </ul>
+
+                        <div
+                            class="mt-6 text-sm text-emerald-600 dark:text-emerald-400"
+                        >
+                            ✅ Fully consistent by design
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Built From Scratch -->
+                <div
+                    data-animate
+                    class="mt-20 max-w-5xl mx-auto p-8 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                >
+                    <h3 class="text-2xl font-bold mb-4">
+                        Why AvyOS Is Built From Scratch
+                    </h3>
+
+                    <p
+                        class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6"
+                    >
+                        Most Linux distributions assemble systems from
+                        independently built packages. Even when versions are
+                        frozen, those packages are rarely built or tested
+                        together as a single, unified system.
+                    </p>
+
+                    <p
+                        class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6"
+                    >
+                        AvyOS uses an image-based build process where the entire
+                        system is integrated, built, and validated in one
+                        pipeline. This eliminates subtle incompatibilities and
+                        prevents package-level breakage.
+                    </p>
+
+                    <p
+                        class="text-slate-600 dark:text-slate-400 leading-relaxed"
+                    >
+                        The result is a system that remains stable and
+                        predictable across updates aligned with the meaning of
+                        <span class="text-avy-accent font-semibold">Avyaya</span
+                        >: that which does not change.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIMITATIONS -->
+        <section
+            class="py-24 px-6 bg-slate-100 dark:bg-slate-950 transition-colors"
+        >
+            <div class="max-w-6xl mx-auto">
+                <!-- Heading -->
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
+                    Limitations (By Design)
+                </h2>
+
+                <p
+                    class="text-center text-lg text-slate-600 dark:text-slate-400 max-w-4xl mx-auto mb-16"
+                >
+                    AvyOS makes deliberate design choices to ensure stability
+                    and consistency. These limitations are intentional and
+                    rarely affect day-to-day usage.
+                </p>
+
+                <div class="grid gap-10 md:grid-cols-2">
+                    <!-- Package Managers -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-3">
+                            No Traditional Package Managers
+                        </h3>
+
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            AvyOS is not based on Debian, Fedora, or Arch. As a
+                            result, system-level package managers like
+                            <code class="font-mono">apt</code>,
+                            <code class="font-mono">dnf</code>, or
+                            <code class="font-mono">pacman</code>
+                            are not available.
+                        </p>
+
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">
+                            Instead, applications are installed using
+                            <span class="font-semibold">Flatpak</span> or
+                            <span class="font-semibold">Extensions</span> and
+                            full development environments can be created using
+                            <span class="font-semibold">Distrobox</span>.
+                        </p>
+                    </div>
+
+                    <!-- Root Filesystem -->
+                    <div
+                        data-animate
+                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-3">
+                            Read-Only Root Filesystem
+                        </h3>
+
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            The root filesystem (<code class="font-mono">/</code
+                            >) is read-only by default. This prevents accidental
+                            system modification and keeps the OS in a known,
+                            reliable state.
+                        </p>
+
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">
+                            Most users never need to modify the root filesystem.
+                            Configuration, applications, and development
+                            workflows live outside the immutable base.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reassurance -->
+                <div
+                    data-animate
+                    class="mt-16 max-w-4xl mx-auto text-center text-slate-600 dark:text-slate-400"
+                >
+                    <p>
+                        These constraints exist to protect the system. AvyOS
+                        prioritizes stability at the core, while providing
+                        flexibility on top so you can focus on using your
+                        system, not fixing it.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GET INVOLVED -->
+        <section
+            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
+        >
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-4 text-center">
+                    Get Involved with AvyOS
+                </h2>
+
+                <p
+                    class="text-center text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto"
+                >
+                    AvyOS is a community-driven, open-source Linux distribution.
+                    Whether you write code, test builds, design interfaces, or
+                    document systems your contribution matters.
+                </p>
+
+                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Code -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">Code</h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            Help improve the core system, tooling, OSTree
+                            integration, or build infrastructure.
+                        </p>
+                        <ul class="text-sm space-y-2">
+                            <li>• Fix bugs & optimize performance</li>
+                            <li>• Improve immutable workflows</li>
+                            <li>• Review and improve code quality</li>
+                        </ul>
+                    </div>
+
+                    <!-- Test -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">Test</h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            Test AvyOS on different hardware and report issues
+                            to improve stability and compatibility.
+                        </p>
+                        <ul class="text-sm space-y-2">
+                            <li>• Test on laptops & desktops</li>
+                            <li>• Verify driver & Flatpak support</li>
+                            <li>• Report regressions</li>
+                        </ul>
+                    </div>
+
+                    <!-- Design -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">Design</h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            Shape the visual identity of AvyOS from themes and
+                            icons to the desktop layout.
+                        </p>
+                        <ul class="text-sm space-y-2">
+                            <li>• XFCE theming & UI polish</li>
+                            <li>• Branding & wallpapers</li>
+                            <li>• Accessibility improvements</li>
+                        </ul>
+                    </div>
+
+                    <!-- Docs -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">
+                            Documentation
+                        </h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            Clear documentation makes AvyOS accessible to users
+                            and contributors alike.
+                        </p>
+                        <ul class="text-sm space-y-2">
+                            <li>• Installation guides</li>
+                            <li>• Immutable system concepts</li>
+                            <li>• Developer onboarding</li>
+                        </ul>
+                    </div>
+
+                    <!-- Community -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">Community</h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
+                        >
+                            Help grow a welcoming, respectful community around
+                            AvyOS.
+                        </p>
+                        <ul class="text-sm space-y-2">
+                            <li>• Answer questions</li>
+                            <li>• Help new contributors</li>
+                            <li>• Moderate discussions</li>
+                        </ul>
+                    </div>
+
+                    <!-- How to Start -->
+                    <div
+                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
+                    >
+                        <h3 class="text-xl font-semibold mb-2">How to Start</h3>
+                        <ol class="text-sm space-y-2 list-decimal list-inside">
+                            <li>Fork the AvyOS repository</li>
+                            <li>Read the contribution guidelines</li>
+                            <li>Pick a good first issue</li>
+                            <li>Submit a pull request</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-12 text-center">
+                    <a
+                        href="#"
+                        class="inline-block px-8 py-3 rounded-lg bg-avy-accent text-slate-900 font-semibold hover:opacity-90"
+                    >
+                        Contribute on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer
+            class="py-8 px-6 border-t border-slate-300 dark:border-slate-800 text-center text-slate-600 dark:text-slate-500"
+        >
+            © 2025 AvyOS - Made with ❤️ in India.
+        </footer>
+
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate-fade-up");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.15 },
+            );
+
+            document.querySelectorAll("[data-animate]").forEach((el) => {
+                observer.observe(el);
+            });
+        </script>
+    </body>
+</html>
