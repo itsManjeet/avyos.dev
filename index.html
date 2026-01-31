@@ -1,855 +1,875 @@
-<!doctype html>
-<html lang="en" class="scroll-smooth">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>AvyOS Immutable. Fast. Secure.</title>
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvyOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-        <!-- Tailwind Config -->
-        <script>
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        colors: {
-                            avy: {
-                                accent: "#3b82f6",
-                            },
-                        },
-                    },
-                },
-            };
-        </script>
+    <style>
+        :root {
+            /* --- LOGO PALETTE (Peacock Theme) --- */
+            --logo-blue-deep: #0a1e42;
+            /* Dark base */
+            --logo-blue-royal: #0056b3;
+            /* Mid-tone blue */
+            --logo-teal: #00c2cb;
+            /* Vibrant Teal */
+            --logo-green: #8cc63f;
+            /* Parrot Green */
+            --logo-orange: #f7941d;
+            /* Eye Orange */
 
-        <style>
-            /* Fade + slide */
-            .animate-fade-up {
-                animation: fadeUp 0.8s ease-out both;
+            /* --- THEME VARIABLES --- */
+            --bg: #020611;
+            /* Deepest Night Blue */
+            --bg-secondary: #0b1221;
+            /* Dark Navy */
+            --bg-card: rgba(11, 18, 33, 0.6);
+
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+
+            /* Gradients */
+            --gradient-peacock: linear-gradient(135deg, var(--logo-green) 0%, var(--logo-teal) 50%, var(--logo-blue-royal) 100%);
+            --gradient-text: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+
+            --border: rgba(0, 194, 203, 0.15);
+            /* Subtle Teal Border */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            /* Background pattern inspired by feather curves */
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(140, 198, 63, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 86, 179, 0.06) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo,
+        .btn {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        code,
+        pre,
+        .desktop-content,
+        .fs-tree {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 6, 17, 0.85);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo Construction inspired by uploaded image */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img-placeholder {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-peacock);
+            /* Abstract feather 'A' shape */
+            clip-path: polygon(50% 0%, 100% 100%, 70% 100%, 50% 40%, 30% 100%, 0% 100%);
+            position: relative;
+        }
+
+        /* The 'Eye' of the feather */
+        .logo-img-placeholder::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 14px;
+            background: var(--logo-orange);
+            border-radius: 50%;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo-text span {
+            /* Makes the OS part teal/gradient */
+            background: var(--gradient-peacock);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--logo-teal);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero-logo {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-logo svg {
+            opacity: 0.95;
+        }
+
+        .hero-logo svg:hover {
+            transform: scale(1.03);
+            transition: transform 0.2s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--logo-green) 0%, var(--logo-teal) 40%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(0, 194, 203, 0.15));
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            /* Pill shape */
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--logo-blue-royal);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px -5px rgba(0, 86, 179, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-peacock);
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px -5px rgba(0, 194, 203, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--logo-teal);
+            color: var(--logo-teal);
+            transform: translateY(-2px);
+        }
+
+        /* --- TERMINAL (The Machine) --- */
+        .terminal-wrapper {
+            /* Outer glowing border gradient */
+            padding: 2px;
+            background: var(--gradient-peacock);
+            border-radius: 14px;
+            max-width: 850px;
+            margin: 60px auto;
+            box-shadow: 0 0 60px rgba(0, 86, 179, 0.15);
+        }
+
+        .terminal {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            /* Inner background specific */
+            background: #050b1a;
+        }
+
+        .terminal-header {
+            background: #0d1526;
+            padding: 12px 16px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Mapping your original classes to theme colors */
+        .terminal-dot.red {
+            background: #ef4444;
+        }
+
+        .terminal-dot.yellow {
+            background: var(--logo-orange);
+        }
+
+        .terminal-dot.green {
+            background: var(--logo-green);
+        }
+
+        .desktop-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* 3-Pane Layout */
+        .desktop-panes {
+            display: flex;
+            height: 360px;
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            /* Separator color */
+        }
+
+        .pane {
+            background: #050b1a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .pane.focused {
+            /* Highlight the focused pane with Teal */
+            box-shadow: inset 0 0 0 1px rgba(0, 194, 203, 0.3);
+        }
+
+        .pane-left {
+            flex: 1.3;
+        }
+
+        .pane-stack {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .pane-right-top {
+            flex: 1;
+        }
+
+        .pane-right-bottom {
+            flex: 1;
+        }
+
+        .pane-title {
+            background: rgba(0, 194, 203, 0.05);
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pane.focused .pane-title {
+            color: var(--logo-teal);
+            font-weight: 600;
+        }
+
+        .pane-content {
+            padding: 12px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .pane-content .prompt {
+            color: var(--logo-green);
+            font-weight: 600;
+        }
+
+        .pane-content .command {
+            color: var(--logo-teal);
+        }
+
+        .pane-content .output {
+            color: var(--text-muted);
+        }
+
+        .desktop-statusbar {
+            display: flex;
+            justify-content: space-between;
+            background: linear-gradient(90deg, var(--logo-blue-royal), #0d1526);
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* --- FEATURES --- */
+        .features {
+            padding: 100px 0;
+        }
+
+        .features h2,
+        .status h2,
+        .filesystem h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.0) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hover effect inspired by peacock feather shimmer */
+        .feature-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-peacock);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            /* Gradient Emoji/Icon */
+            background: var(--gradient-peacock);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Fallback for standard emojis */
+            text-shadow: 0 0 20px rgba(0, 194, 203, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- STATUS --- */
+        .status {
+            padding: 80px 0;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-table th {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 24px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--logo-teal);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .status-table td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .status-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Badge Styles mapped to Theme */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-done {
+            background: rgba(140, 198, 63, 0.15);
+            /* Green tint */
+            color: var(--logo-green);
+        }
+
+        .status-basic {
+            background: rgba(247, 148, 29, 0.15);
+            /* Orange tint */
+            color: var(--logo-orange);
+        }
+
+        .status-todo {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        /* --- FILESYSTEM --- */
+        .filesystem {
+            padding: 80px 0;
+        }
+
+        .filesystem>p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+        }
+
+        .fs-container {
+            /* Gradient Border Container */
+            position: relative;
+            padding: 1px;
+            background: linear-gradient(180deg, var(--logo-teal), transparent);
+            border-radius: 14px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .fs-tree {
+            background: #080c19;
+            border-radius: 13px;
+            padding: 40px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        /* Tree lines */
+        .fs-tree div {
+            position: relative;
+            padding-left: 12px;
+            border-left: 1px solid rgba(0, 194, 203, 0.2);
+            margin-left: 6px;
+            line-height: 1.8;
+        }
+
+        .fs-tree .dir {
+            color: var(--logo-teal);
+            font-weight: 600;
+        }
+
+        .fs-tree .comment {
+            color: var(--text-muted);
+            font-style: italic;
+            opacity: 0.6;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--logo-teal);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
             }
 
-            @keyframes fadeUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(24px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            .nav-links {
+                display: none;
             }
 
-            /* Stagger delay helpers */
-            .delay-100 {
-                animation-delay: 0.1s;
+            .desktop-panes {
+                flex-direction: column;
+                height: auto;
             }
 
-            .delay-200 {
-                animation-delay: 0.2s;
+            .pane-left {
+                min-height: 200px;
             }
+        }
+    </style>
+</head>
 
-            .delay-300 {
-                animation-delay: 0.3s;
-            }
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo-container">
+                    <div class="logo-text">Avy<span>OS</span></div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#status">Status</a></li>
+                    <li><a href="#filesystem">Filesystem</a></li>
+                    <li><a href="https://github.com/user/avyos">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-            .delay-400 {
-                animation-delay: 0.4s;
-            }
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>#redesigning legacy</h1>
+                <p>A modern operating system, redesigned from the ground up.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/itsmanjeet/avyos" class="btn btn-primary">View on GitHub</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
 
-            /* Respect reduced motion */
-            @media (prefers-reduced-motion: reduce) {
-                * {
-                    animation: none !important;
-                    transition: none !important;
-                }
-            }
-        </style>
-
-        <!-- Dark / Light Mode Script -->
-        <script>
-            if (
-                localStorage.theme === "dark" ||
-                (!("theme" in localStorage) &&
-                    window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-
-            function toggleTheme() {
-                if (document.documentElement.classList.contains("dark")) {
-                    document.documentElement.classList.remove("dark");
-                    localStorage.theme = "light";
-                } else {
-                    document.documentElement.classList.add("dark");
-                    localStorage.theme = "dark";
-                }
-            }
-        </script>
-    </head>
-
-    <body
-        class="bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-200 transition-colors antialiased"
-    >
-        <!-- Theme Toggle -->
-        <div class="fixed top-4 right-4 z-50">
-            <button
-                onclick="toggleTheme()"
-                class="px-4 py-2 rounded-lg border bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700 hover:scale-105 transition"
-            >
-                <span class="dark:hidden">☀️</span>
-                <span class="hidden dark:inline">🌙</span>
-            </button>
+        <div class="container">
+            <div class="terminal-wrapper">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                    </div>
+                    <div class="desktop-content">
+                        <div class="desktop-panes">
+                            <div class="pane pane-left focused">
+                                <div class="pane-title">terminal-1</div>
+                                <div class="pane-content">
+                                    <div><span class="prompt">avyos $</span> <span class="command">list /avyos</span>
+                                    </div>
+                                    <div class="output">apps cmd config data services</div>
+                                    <br>
+                                    <div><span class="prompt">avyos $</span> <span class="command">tree
+                                            /avyos/cmd</span></div>
+                                    <div class="output">/avyos/cmd</div>
+                                    <div class="output">├── init</div>
+                                    <div class="output">├── shell</div>
+                                    <div class="output">├── list</div>
+                                    <div class="output">├── read</div>
+                                    <div class="output">├── write</div>
+                                    <div class="output">├── copy</div>
+                                    <div class="output">├── move</div>
+                                    <div class="output">├── delete</div>
+                                    <div class="output">└── ...</div>
+                                    <div><span class="prompt">avyos $</span> <span class="command">_</span></div>
+                                </div>
+                            </div>
+                            <div class="pane-stack">
+                                <div class="pane pane-right-top">
+                                    <div class="pane-title">terminal-2</div>
+                                    <div class="pane-content">
+                                        <div><span class="prompt">avyos $</span> <span class="command">identity
+                                                whoami</span></div>
+                                        <div class="output">alice (uid: 1000)</div>
+                                        <div><span class="prompt">avyos $</span> <span class="command">info
+                                                /users/alice</span></div>
+                                        <div class="output">Type: directory</div>
+                                        <div class="output">Size: 4096 bytes</div>
+                                        <div><span class="prompt">avyos $</span> <span class="command">_</span></div>
+                                    </div>
+                                </div>
+                                <div class="pane pane-right-bottom">
+                                    <div class="pane-title">notepad</div>
+                                    <div class="pane-content">
+                                        <div class="output" style="color: var(--logo-teal);">Welcome to AvyOS!</div>
+                                        <div class="output">───────────────────</div>
+                                        <div class="output"> </div>
+                                        <div class="output">A pure Go operating</div>
+                                        <div class="output">system with a TUI</div>
+                                        <div class="output">desktop environment.</div>
+                                        <div class="output"> </div>
+                                        <div class="output">Press <span style="color:white">Ctrl+A ?</span> for</div>
+                                        <div class="output">keyboard shortcuts.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="desktop-statusbar">
+                            <span class="statusbar-left">terminal-1</span>
+                            <span class="statusbar-center">Ctrl+A ? for help</span>
+                            <span class="statusbar-right">03:45 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- HERO -->
-        <section class="min-h-screen flex items-center px-6">
-            <div
-                class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center"
-            >
-                <!-- Left Content -->
-                <div>
-                    <h1 class="text-5xl md:text-6xl font-bold animate-fade-up">
-                        Avy<span class="text-avy-accent">OS</span>
-                    </h1>
-
-                    <p
-                        class="mt-4 text-xl text-slate-500 dark:text-slate-400 animate-fade-up delay-100"
-                    >
-                        Immutable. Lightweight. Blazing Fast.
-                    </p>
-
-                    <p class="mt-6 text-lg max-w-xl animate-fade-up delay-200">
-                        AvyOS is an immutable Linux distribution built from
-                        scratch using OSTree, optimized for speed, stability,
-                        and a beautifully customized XFCE desktop.
-                    </p>
-
-                    <div class="mt-8 flex flex-wrap gap-4">
-                        <a
-                            href="#"
-                            class="px-6 py-3 rounded-lg bg-avy-accent text-slate-900 font-semibold hover:opacity-90"
-                        >
-                            Download (Coming Soon)
-                        </a>
-                        <a
-                            href="#"
-                            class="px-6 py-3 rounded-lg border border-slate-400 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-900"
-                        >
-                            Documentation
-                        </a>
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Why AvyOS?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🦫</div>
+                        <h3>Pure Go</h3>
+                        <p>Built with CGO_ENABLED=0. No C toolchain required. The entire userspace compiles with just
+                            the Go compiler.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Immutable Core</h3>
+                        <p>System files in /avyos/ are read-only. Updates are atomic. Configuration overrides live
+                            separately.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📦</div>
+                        <h3>Non-POSIX</h3>
+                        <p>Clean, modern interfaces without decades of legacy baggage. Linux compatibility via
+                            containers when needed.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖥️</div>
+                        <h3>TUI Desktop</h3>
+                        <p>Terminal-based tiling window manager with BSP, grid, and spiral layouts. Like tmux meets i3.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Capability-Based</h3>
+                        <p>Applications run with capability restrictions. Fine-grained permissions without root/non-root
+                            dichotomy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast Development</h3>
+                        <p>Go's simplicity makes building and extending the OS enjoyable. Single-developer friendly
+                            codebase.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Right Laptop Mockup -->
-                <div
-                    class="relative flex justify-center animate-fade-up delay-300"
-                >
-                    <!-- Glow -->
-                    <div
-                        class="absolute -inset-10 bg-avy-accent/20 blur-3xl rounded-full"
-                    ></div>
+        <section id="status" class="status">
+            <div class="container">
+                <h2>Project Status</h2>
+                <table class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Boot & Init</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>Basic init system with service manager</td>
+                        </tr>
+                        <tr>
+                            <td>Shell</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>Interactive shell with builtins</td>
+                        </tr>
+                        <tr>
+                            <td>IPC</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>Sutra message bus + code generator</td>
+                        </tr>
+                        <tr>
+                            <td>UI Toolkit</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>Terminal UI only</td>
+                        </tr>
+                        <tr>
+                            <td>Desktop Environment</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>Terminal only tiling WM</td>
+                        </tr>
+                        <tr>
+                            <td>Networking</td>
+                            <td><span class="status-badge status-todo">TODO</span></td>
+                            <td>Static IPv4 support only</td>
+                        </tr>
+                        <tr>
+                            <td>Core Utils</td>
+                            <td><span class="status-badge status-basic">Basic</span></td>
+                            <td>23 essential commands</td>
+                        </tr>
+                        <tr>
+                            <td>Audio</td>
+                            <td><span class="status-badge status-todo">TODO</span></td>
+                            <td>ALSA or direct hardware</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-                    <!-- Laptop Body -->
-                    <div class="relative w-full max-w-xl">
-                        <!-- Screen -->
-                        <div
-                            class="rounded-t-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-black shadow-2xl"
-                        >
-                            <img
-                                src="screenshots/laptop-mockup.png"
-                                alt="AvyOS running on laptop"
-                                class="w-full aspect-video object-cover"
-                            />
+        <section id="filesystem" class="filesystem">
+            <div class="container">
+                <h2>Filesystem Hierarchy</h2>
+                <div class="fs-container">
+                    <div class="fs-tree">
+                        <div><span class="dir">/</span></div>
+                        <div>├── <span class="dir">avyos/</span> <span class="comment"># Immutable system
+                                (squashfs)</span></div>
+                        <div>│ ├── <span class="dir">cmd/</span> <span class="comment"># Commands (nosuid, nodev)</span>
                         </div>
-
-                        <!-- Keyboard Base -->
-                        <div
-                            class="h-6 bg-slate-300 dark:bg-slate-700 rounded-b-xl border border-t-0 border-slate-300 dark:border-slate-700"
-                        ></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ABOUT -->
-        <section
-            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
-        >
-            <div class="max-w-5xl mx-auto">
-                <h2 class="text-3xl font-bold mb-6">What is AvyOS?</h2>
-                <p
-                    class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed"
-                >
-                    AvyOS is an independent operating system based on Linux
-                    kernel designed for long-term stability and reliability. The
-                    name comes from the Sanskrit term
-                    <span class="font-semibold">Avyaya (अव्यय)</span>, meaning
-                    <i>“unchanging”</i> or <i>“immutable.”</i> AvyOS protects
-                    the core system from accidental changes and delivers safe,
-                    predictable updates using OSTree.
-                </p>
-            </div>
-        </section>
-
-        <!-- FEATURES -->
-        <section class="py-20 px-6">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold mb-12 text-center">
-                    Core Features
-                </h2>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Immutable Core
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            OSTree-based immutable system that prevents
-                            accidental breakage.
-                        </p>
-                    </div>
-
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Extreme Performance
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            Built from scratch and optimized for real,
-                            noticeable speed.
-                        </p>
-                    </div>
-
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Customized XFCE
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            Lightweight, responsive, and beautifully tuned
-                            desktop environment.
-                        </p>
-                    </div>
-
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Flatpak & Distrobox
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            Run apps from any distribution without touching the
-                            base system.
-                        </p>
-                    </div>
-
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Sysroot Extensions
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            Add drivers and desktops safely without compromising
-                            stability.
-                        </p>
-                    </div>
-
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Secure by Design
-                        </h3>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            Immutable architecture enables safe rollbacks and
-                            recovery.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCREENSHOTS -->
-        <section class="py-20 px-6">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold mb-4 text-center">
-                    AvyOS in Action
-                </h2>
-
-                <p
-                    class="text-center text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto"
-                >
-                    A beautifully customized XFCE desktop lightweight,
-                    responsive, and optimized for speed without sacrificing
-                    aesthetics.
-                </p>
-
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <!-- Screenshot Card -->
-                    <div
-                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
-                    >
-                        <img
-                            src="screenshots/desktop-1.png"
-                            alt="AvyOS desktop overview"
-                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg">
-                                Desktop Overview
-                            </h3>
-                            <p
-                                class="text-slate-600 dark:text-slate-400 text-sm"
-                            >
-                                Clean XFCE layout with custom theming and fast
-                                panel response.
-                            </p>
+                        <div>│ ├── <span class="dir">config/</span> <span class="comment"># Default configs
+                                (noexec)</span></div>
+                        <div>│ ├── <span class="dir">data/</span> <span class="comment"># Icons, fonts (noexec)</span>
                         </div>
-                    </div>
-
-                    <div
-                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
-                    >
-                        <img
-                            src="screenshots/desktop-2.png"
-                            alt="AvyOS application launcher"
-                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg">
-                                Application Launcher
-                            </h3>
-                            <p
-                                class="text-slate-600 dark:text-slate-400 text-sm"
-                            >
-                                Fast, minimal app menu designed for keyboard and
-                                mouse users.
-                            </p>
+                        <div>│ ├── <span class="dir">apps/</span> <span class="comment"># User applications</span></div>
+                        <div>│ └── <span class="dir">services/</span> <span class="comment"># System services</span>
                         </div>
-                    </div>
-
-                    <div
-                        class="group rounded-xl overflow-hidden border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900"
-                    >
-                        <img
-                            src="screenshots/desktop-3.png"
-                            alt="AvyOS terminal and performance"
-                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg">
-                                Speed & Performance
-                            </h3>
-                            <p
-                                class="text-slate-600 dark:text-slate-400 text-sm"
-                            >
-                                Instant app launches and low resource usage on
-                                real hardware.
-                            </p>
+                        <div>├── <span class="dir">config/</span> <span class="comment"># Mutable config
+                                overrides</span></div>
+                        <div>├── <span class="dir">users/</span> <span class="comment"># Home directories</span></div>
+                        <div>├── <span class="dir">cache/</span> <span class="comment"># Runtime & kernel
+                                filesystems</span></div>
+                        <div>│ ├── <span class="dir">kernel/</span> <span class="comment"># procfs, sysfs,
+                                devtmpfs</span></div>
+                        <div>│ └── <span class="dir">runtime/</span> <span class="comment"># Runtime state (/run)</span>
                         </div>
+                        <div>└── <span class="dir">linux/</span> <span class="comment"># Linux compatibility
+                                containers</span></div>
                     </div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- WHY -->
-        <section
-            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
-        >
-            <div class="max-w-5xl mx-auto">
-                <h2 class="text-3xl font-bold mb-8">Why AvyOS?</h2>
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ in India.</p>
+        </div>
+    </footer>
+</body>
 
-                <ul
-                    class="space-y-5 text-lg text-slate-700 dark:text-slate-300"
-                >
-                    <li>
-                        <span class="font-semibold">Secure by default</span>
-                        immutable system design reduces attack surface and
-                        prevents accidental system modifications.
-                    </li>
-
-                    <li>
-                        <span class="font-semibold">Immutable by design</span>
-                        a stable, predictable core with support for safe,
-                        controlled extensions.
-                    </li>
-
-                    <li>
-                        <span class="font-semibold">Performance-focused</span>
-                        optimized for speed, responsiveness, and low resource
-                        usage.
-                    </li>
-
-                    <li>
-                        <span class="font-semibold">Daily-driver ready</span>
-                        practical for everyday use, development, and long-term
-                        reliability.
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- IMMUTABLE EXPLAINED -->
-        <section
-            class="py-24 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
-        >
-            <div class="max-w-7xl mx-auto">
-                <!-- Heading -->
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
-                    Immutable, Explained
-                </h2>
-
-                <!-- Core Explanation -->
-                <p
-                    class="text-center text-lg text-slate-600 dark:text-slate-400 max-w-4xl mx-auto mb-14"
-                >
-                    Immutable Linux distributions keep the core operating system
-                    <span class="font-semibold">read-only and consistent</span>.
-                    Instead of modifying the live system package by package, the
-                    OS is built and tested as a complete image and updated
-                    atomically. This prevents partial upgrades, dependency
-                    conflicts, and system breakage.
-                </p>
-
-                <!-- Pros & Cons -->
-                <div class="max-w-5xl mx-auto mb-20 grid gap-8 md:grid-cols-2">
-                    <!-- Pros -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3
-                            class="text-xl font-semibold mb-4 text-emerald-600 dark:text-emerald-400"
-                        >
-                            Advantages
-                        </h3>
-
-                        <ul
-                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
-                        >
-                            <li>Predictable and consistent system state</li>
-                            <li>No partial upgrades or broken dependencies</li>
-                            <li>Atomic updates with safe rollback</li>
-                            <li>Stronger stability and reliability</li>
-                            <li>Lower risk of accidental system damage</li>
-                        </ul>
-                    </div>
-
-                    <!-- Cons -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3
-                            class="text-xl font-semibold mb-4 text-amber-600 dark:text-amber-400"
-                        >
-                            Trade-offs
-                        </h3>
-
-                        <ul
-                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
-                        >
-                            <li>Core system cannot be modified directly</li>
-                            <li>Updates typically require a reboot</li>
-                            <li>Different workflow than traditional distros</li>
-                            <li>Less suitable for heavy system tinkering</li>
-                            <li>
-                                Larger updates due to full image replacement
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Bridge -->
-                <p
-                    class="text-center text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-16"
-                >
-                    AvyOS embraces these trade-offs while restoring flexibility
-                    through Flatpak, Distrobox, and controlled system extensions
-                    keeping the base stable without limiting user workflows.
-                </p>
-
-                <!-- Comparison -->
-                <div class="grid gap-10 lg:grid-cols-3">
-                    <!-- Package-Based -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-4">
-                            Package-Based Distributions
-                        </h3>
-
-                        <ul
-                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
-                        >
-                            <li>System assembled package by package</li>
-                            <li>Independent package updates</li>
-                            <li>Dependency mismatches are common</li>
-                            <li>Partial upgrades can break the system</li>
-                        </ul>
-
-                        <div
-                            class="mt-6 text-sm text-red-600 dark:text-red-400"
-                        >
-                            ❌ Inconsistent system state
-                        </div>
-                    </div>
-
-                    <!-- Frozen -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-4">
-                            Tradition Immutable Distro
-                        </h3>
-
-                        <ul
-                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
-                        >
-                            <li>Packages frozen at fixed versions</li>
-                            <li>Reduced update frequency</li>
-                            <li>Still built as individual packages</li>
-                            <li>Inconsistencies can accumulate over time</li>
-                        </ul>
-
-                        <div
-                            class="mt-6 text-sm text-amber-600 dark:text-amber-400"
-                        >
-                            ⚠ More stable, but not fully consistent
-                        </div>
-                    </div>
-
-                    <!-- AvyOS -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-avy-accent/60 ring-1 ring-avy-accent/40"
-                    >
-                        <h3 class="text-xl font-semibold mb-4 text-avy-accent">
-                            AvyOS (Image-Based Immutable)
-                        </h3>
-
-                        <ul
-                            class="space-y-3 text-slate-600 dark:text-slate-400 text-sm"
-                        >
-                            <li>Entire OS built as a single image</li>
-                            <li>All components tested together</li>
-                            <li>Atomic updates only</li>
-                            <li>Reliable rollback on failure</li>
-                        </ul>
-
-                        <div
-                            class="mt-6 text-sm text-emerald-600 dark:text-emerald-400"
-                        >
-                            ✅ Fully consistent by design
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Built From Scratch -->
-                <div
-                    data-animate
-                    class="mt-20 max-w-5xl mx-auto p-8 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                >
-                    <h3 class="text-2xl font-bold mb-4">
-                        Why AvyOS Is Built From Scratch
-                    </h3>
-
-                    <p
-                        class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6"
-                    >
-                        Most Linux distributions assemble systems from
-                        independently built packages. Even when versions are
-                        frozen, those packages are rarely built or tested
-                        together as a single, unified system.
-                    </p>
-
-                    <p
-                        class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6"
-                    >
-                        AvyOS uses an image-based build process where the entire
-                        system is integrated, built, and validated in one
-                        pipeline. This eliminates subtle incompatibilities and
-                        prevents package-level breakage.
-                    </p>
-
-                    <p
-                        class="text-slate-600 dark:text-slate-400 leading-relaxed"
-                    >
-                        The result is a system that remains stable and
-                        predictable across updates aligned with the meaning of
-                        <span class="text-avy-accent font-semibold">Avyaya</span
-                        >: that which does not change.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- LIMITATIONS -->
-        <section
-            class="py-24 px-6 bg-slate-100 dark:bg-slate-950 transition-colors"
-        >
-            <div class="max-w-6xl mx-auto">
-                <!-- Heading -->
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">
-                    Limitations (By Design)
-                </h2>
-
-                <p
-                    class="text-center text-lg text-slate-600 dark:text-slate-400 max-w-4xl mx-auto mb-16"
-                >
-                    AvyOS makes deliberate design choices to ensure stability
-                    and consistency. These limitations are intentional and
-                    rarely affect day-to-day usage.
-                </p>
-
-                <div class="grid gap-10 md:grid-cols-2">
-                    <!-- Package Managers -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-3">
-                            No Traditional Package Managers
-                        </h3>
-
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            AvyOS is not based on Debian, Fedora, or Arch. As a
-                            result, system-level package managers like
-                            <code class="font-mono">apt</code>,
-                            <code class="font-mono">dnf</code>, or
-                            <code class="font-mono">pacman</code>
-                            are not available.
-                        </p>
-
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">
-                            Instead, applications are installed using
-                            <span class="font-semibold">Flatpak</span> or
-                            <span class="font-semibold">Extensions</span> and
-                            full development environments can be created using
-                            <span class="font-semibold">Distrobox</span>.
-                        </p>
-                    </div>
-
-                    <!-- Root Filesystem -->
-                    <div
-                        data-animate
-                        class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-3">
-                            Read-Only Root Filesystem
-                        </h3>
-
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            The root filesystem (<code class="font-mono">/</code
-                            >) is read-only by default. This prevents accidental
-                            system modification and keeps the OS in a known,
-                            reliable state.
-                        </p>
-
-                        <p class="text-slate-600 dark:text-slate-400 text-sm">
-                            Most users never need to modify the root filesystem.
-                            Configuration, applications, and development
-                            workflows live outside the immutable base.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Reassurance -->
-                <div
-                    data-animate
-                    class="mt-16 max-w-4xl mx-auto text-center text-slate-600 dark:text-slate-400"
-                >
-                    <p>
-                        These constraints exist to protect the system. AvyOS
-                        prioritizes stability at the core, while providing
-                        flexibility on top so you can focus on using your
-                        system, not fixing it.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- GET INVOLVED -->
-        <section
-            class="py-20 px-6 bg-slate-200 dark:bg-slate-900 transition-colors"
-        >
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold mb-4 text-center">
-                    Get Involved with AvyOS
-                </h2>
-
-                <p
-                    class="text-center text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto"
-                >
-                    AvyOS is a community-driven, open-source Linux distribution.
-                    Whether you write code, test builds, design interfaces, or
-                    document systems your contribution matters.
-                </p>
-
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    <!-- Code -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">Code</h3>
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            Help improve the core system, tooling, OSTree
-                            integration, or build infrastructure.
-                        </p>
-                        <ul class="text-sm space-y-2">
-                            <li>• Fix bugs & optimize performance</li>
-                            <li>• Improve immutable workflows</li>
-                            <li>• Review and improve code quality</li>
-                        </ul>
-                    </div>
-
-                    <!-- Test -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">Test</h3>
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            Test AvyOS on different hardware and report issues
-                            to improve stability and compatibility.
-                        </p>
-                        <ul class="text-sm space-y-2">
-                            <li>• Test on laptops & desktops</li>
-                            <li>• Verify driver & Flatpak support</li>
-                            <li>• Report regressions</li>
-                        </ul>
-                    </div>
-
-                    <!-- Design -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">Design</h3>
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            Shape the visual identity of AvyOS from themes and
-                            icons to the desktop layout.
-                        </p>
-                        <ul class="text-sm space-y-2">
-                            <li>• XFCE theming & UI polish</li>
-                            <li>• Branding & wallpapers</li>
-                            <li>• Accessibility improvements</li>
-                        </ul>
-                    </div>
-
-                    <!-- Docs -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">
-                            Documentation
-                        </h3>
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            Clear documentation makes AvyOS accessible to users
-                            and contributors alike.
-                        </p>
-                        <ul class="text-sm space-y-2">
-                            <li>• Installation guides</li>
-                            <li>• Immutable system concepts</li>
-                            <li>• Developer onboarding</li>
-                        </ul>
-                    </div>
-
-                    <!-- Community -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">Community</h3>
-                        <p
-                            class="text-slate-600 dark:text-slate-400 text-sm mb-4"
-                        >
-                            Help grow a welcoming, respectful community around
-                            AvyOS.
-                        </p>
-                        <ul class="text-sm space-y-2">
-                            <li>• Answer questions</li>
-                            <li>• Help new contributors</li>
-                            <li>• Moderate discussions</li>
-                        </ul>
-                    </div>
-
-                    <!-- How to Start -->
-                    <div
-                        class="p-6 rounded-xl bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800"
-                    >
-                        <h3 class="text-xl font-semibold mb-2">How to Start</h3>
-                        <ol class="text-sm space-y-2 list-decimal list-inside">
-                            <li>Fork the AvyOS repository</li>
-                            <li>Read the contribution guidelines</li>
-                            <li>Pick a good first issue</li>
-                            <li>Submit a pull request</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- CTA -->
-                <div class="mt-12 text-center">
-                    <a
-                        href="#"
-                        class="inline-block px-8 py-3 rounded-lg bg-avy-accent text-slate-900 font-semibold hover:opacity-90"
-                    >
-                        Contribute on GitHub
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer
-            class="py-8 px-6 border-t border-slate-300 dark:border-slate-800 text-center text-slate-600 dark:text-slate-500"
-        >
-            © 2025 AvyOS - Made with ❤️ in India.
-        </footer>
-
-        <script>
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add("animate-fade-up");
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                },
-                { threshold: 0.15 },
-            );
-
-            document.querySelectorAll("[data-animate]").forEach((el) => {
-                observer.observe(el);
-            });
-        </script>
-    </body>
 </html>
