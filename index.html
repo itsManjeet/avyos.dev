@@ -1,875 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AvyOS</title>
+    <title>AvyOS — The Imperishable Operating System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <style>
-        :root {
-            /* --- LOGO PALETTE (Peacock Theme) --- */
-            --logo-blue-deep: #0a1e42;
-            /* Dark base */
-            --logo-blue-royal: #0056b3;
-            /* Mid-tone blue */
-            --logo-teal: #00c2cb;
-            /* Vibrant Teal */
-            --logo-green: #8cc63f;
-            /* Parrot Green */
-            --logo-orange: #f7941d;
-            /* Eye Orange */
-
-            /* --- THEME VARIABLES --- */
-            --bg: #020611;
-            /* Deepest Night Blue */
-            --bg-secondary: #0b1221;
-            /* Dark Navy */
-            --bg-card: rgba(11, 18, 33, 0.6);
-
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-
-            /* Gradients */
-            --gradient-peacock: linear-gradient(135deg, var(--logo-green) 0%, var(--logo-teal) 50%, var(--logo-blue-royal) 100%);
-            --gradient-text: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-
-            --border: rgba(0, 194, 203, 0.15);
-            /* Subtle Teal Border */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            /* Background pattern inspired by feather curves */
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(140, 198, 63, 0.04) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 86, 179, 0.06) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-
-        h1,
-        h2,
-        h3,
-        .logo,
-        .btn {
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        code,
-        pre,
-        .desktop-content,
-        .fs-tree {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- HEADER --- */
-        header {
-            padding: 24px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(2, 6, 17, 0.85);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Logo Construction inspired by uploaded image */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img-placeholder {
-            width: 36px;
-            height: 36px;
-            background: var(--gradient-peacock);
-            /* Abstract feather 'A' shape */
-            clip-path: polygon(50% 0%, 100% 100%, 70% 100%, 50% 40%, 30% 100%, 0% 100%);
-            position: relative;
-        }
-
-        /* The 'Eye' of the feather */
-        .logo-img-placeholder::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 14px;
-            background: var(--logo-orange);
-            border-radius: 50%;
-            top: 35%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .logo-text span {
-            /* Makes the OS part teal/gradient */
-            background: var(--gradient-peacock);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--logo-teal);
-        }
-
-        /* --- HERO --- */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-        }
-
-        .hero-logo {
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-logo svg {
-            opacity: 0.95;
-        }
-
-        .hero-logo svg:hover {
-            transform: scale(1.03);
-            transition: transform 0.2s ease;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 24px;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--logo-green) 0%, var(--logo-teal) 40%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(0, 194, 203, 0.15));
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border-radius: 50px;
-            /* Pill shape */
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn-primary {
-            background: var(--logo-blue-royal);
-            color: white;
-            border: none;
-            box-shadow: 0 10px 25px -5px rgba(0, 86, 179, 0.4);
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-peacock);
-            z-index: -1;
-            transition: opacity 0.3s;
-            opacity: 0;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px -5px rgba(0, 194, 203, 0.4);
-        }
-
-        .btn-primary:hover::before {
-            opacity: 1;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--logo-teal);
-            color: var(--logo-teal);
-            transform: translateY(-2px);
-        }
-
-        /* --- TERMINAL (The Machine) --- */
-        .terminal-wrapper {
-            /* Outer glowing border gradient */
-            padding: 2px;
-            background: var(--gradient-peacock);
-            border-radius: 14px;
-            max-width: 850px;
-            margin: 60px auto;
-            box-shadow: 0 0 60px rgba(0, 86, 179, 0.15);
-        }
-
-        .terminal {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            overflow: hidden;
-            /* Inner background specific */
-            background: #050b1a;
-        }
-
-        .terminal-header {
-            background: #0d1526;
-            padding: 12px 16px;
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        /* Mapping your original classes to theme colors */
-        .terminal-dot.red {
-            background: #ef4444;
-        }
-
-        .terminal-dot.yellow {
-            background: var(--logo-orange);
-        }
-
-        .terminal-dot.green {
-            background: var(--logo-green);
-        }
-
-        .desktop-content {
-            font-size: 0.8rem;
-            line-height: 1.5;
-        }
-
-        /* 3-Pane Layout */
-        .desktop-panes {
-            display: flex;
-            height: 360px;
-            gap: 1px;
-            background: rgba(255, 255, 255, 0.05);
-            /* Separator color */
-        }
-
-        .pane {
-            background: #050b1a;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .pane.focused {
-            /* Highlight the focused pane with Teal */
-            box-shadow: inset 0 0 0 1px rgba(0, 194, 203, 0.3);
-        }
-
-        .pane-left {
-            flex: 1.3;
-        }
-
-        .pane-stack {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-
-        .pane-right-top {
-            flex: 1;
-        }
-
-        .pane-right-bottom {
-            flex: 1;
-        }
-
-        .pane-title {
-            background: rgba(0, 194, 203, 0.05);
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .pane.focused .pane-title {
-            color: var(--logo-teal);
-            font-weight: 600;
-        }
-
-        .pane-content {
-            padding: 12px;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .pane-content .prompt {
-            color: var(--logo-green);
-            font-weight: 600;
-        }
-
-        .pane-content .command {
-            color: var(--logo-teal);
-        }
-
-        .pane-content .output {
-            color: var(--text-muted);
-        }
-
-        .desktop-statusbar {
-            display: flex;
-            justify-content: space-between;
-            background: linear-gradient(90deg, var(--logo-blue-royal), #0d1526);
-            padding: 6px 16px;
-            font-size: 0.75rem;
-            color: white;
-            font-weight: 500;
-        }
-
-        /* --- FEATURES --- */
-        .features {
-            padding: 100px 0;
-        }
-
-        .features h2,
-        .status h2,
-        .filesystem h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 60px;
-            letter-spacing: -1px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.0) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Hover effect inspired by peacock feather shimmer */
-        .feature-card::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--gradient-peacock);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .feature-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 16px;
-            /* Gradient Emoji/Icon */
-            background: var(--gradient-peacock);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* Fallback for standard emojis */
-            text-shadow: 0 0 20px rgba(0, 194, 203, 0.3);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* --- STATUS --- */
-        .status {
-            padding: 80px 0;
-        }
-
-        .status-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .status-table th {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px 24px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--logo-teal);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .status-table td {
-            padding: 16px 24px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .status-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Badge Styles mapped to Theme */
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-done {
-            background: rgba(140, 198, 63, 0.15);
-            /* Green tint */
-            color: var(--logo-green);
-        }
-
-        .status-basic {
-            background: rgba(247, 148, 29, 0.15);
-            /* Orange tint */
-            color: var(--logo-orange);
-        }
-
-        .status-todo {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-        }
-
-        /* --- FILESYSTEM --- */
-        .filesystem {
-            padding: 80px 0;
-        }
-
-        .filesystem>p {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 60px;
-        }
-
-        .fs-container {
-            /* Gradient Border Container */
-            position: relative;
-            padding: 1px;
-            background: linear-gradient(180deg, var(--logo-teal), transparent);
-            border-radius: 14px;
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .fs-tree {
-            background: #080c19;
-            border-radius: 13px;
-            padding: 40px;
-            font-size: 0.9rem;
-            position: relative;
-        }
-
-        /* Tree lines */
-        .fs-tree div {
-            position: relative;
-            padding-left: 12px;
-            border-left: 1px solid rgba(0, 194, 203, 0.2);
-            margin-left: 6px;
-            line-height: 1.8;
-        }
-
-        .fs-tree .dir {
-            color: var(--logo-teal);
-            font-weight: 600;
-        }
-
-        .fs-tree .comment {
-            color: var(--text-muted);
-            font-style: italic;
-            opacity: 0.6;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 60px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer a {
-            color: var(--logo-teal);
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .desktop-panes {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .pane-left {
-                min-height: 200px;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
-
 <body>
-    <header>
+    <div class="notification-banner">
+        Experimental project — not ready for production use. <a href="https://github.com/itsmanjeet/avyos">Follow development on GitHub</a>
+    </div>
+
+    <nav>
         <div class="container">
-            <nav>
-                <a href="#" class="logo-container">
-                    <div class="logo-text">Avy<span>OS</span></div>
-                </a>
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#status">Status</a></li>
-                    <li><a href="#filesystem">Filesystem</a></li>
-                    <li><a href="https://github.com/user/avyos">GitHub</a></li>
-                </ul>
-            </nav>
+            <div class="logo">AvyOS</div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#filesystem">Highlights</a></li>
+                <li><a href="#status">Status</a></li>
+                <li><a href="https://github.com/user/avyos" class="nav-cta">GitHub</a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>#redesigning legacy</h1>
-                <p>A modern operating system, redesigned from the ground up.
-                </p>
-                <div class="hero-buttons">
-                    <a href="https://github.com/itsmanjeet/avyos" class="btn btn-primary">View on GitHub</a>
-                    <a href="#features" class="btn btn-secondary">Learn More</a>
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Pure Go • No CGO • Non-POSIX
+        </div>
+        <p class="hero-sanskrit sanskrit">॥ अव्यय ॥</p>
+        <h1>The <span>Imperishable</span><br>Operating System</h1>
+        <p class="hero-description">
+            Like the eternal Krishna adorned with peacock feathers, AvyOS is built on an
+            immutable core — unchanging, incorruptible, forever pure.
+        </p>
+        <p class="hero-verse">"That which pervades the entire body, know it to be indestructible." — Gita 2.17</p>
+        <div class="hero-buttons">
+            <a href="#features" class="btn btn-primary">
+                Explore
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <a href="https://github.com/user/avyos" class="btn btn-secondary">View on GitHub</a>
+        </div>
+    </section>
+
+    <section class="terminal-section">
+        <div class="terminal-wrapper">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+                    <span class="terminal-title">AvyOS Desktop</span>
+                    <span class="terminal-layout">BSP Layout</span>
+                </div>
+                <div class="terminal-content">
+                    <div class="pane main active">
+                        <div class="pane-title">Shell</div>
+                        <div class="pane-content">
+                            <span class="prompt">alice@avyos ~</span> <span class="command">list /avyos/</span><br>
+                            cmd/  config/  data/  apps/  services/<br><br>
+                            <span class="prompt">alice@avyos ~</span> <span class="command">system status</span><br>
+                            init     running  pid:1<br>
+                            sutra    running  pid:12<br>
+                            login    running  pid:18<br>
+                            desktop  running  pid:24<br><br>
+                            <span class="prompt">alice@avyos ~</span><span class="cursor"></span>
+                        </div>
+                    </div>
+                    <div class="pane">
+                        <div class="pane-title">Notepad</div>
+                        <div class="pane-content">
+                            ── notes.txt ──<br><br>
+                            Design Goals:<br>
+                            • Pure Go, no CGO<br>
+                            • Non-POSIX by design<br>
+                            • Immutable system core<br>
+                        </div>
+                    </div>
+                    <div class="pane">
+                        <div class="pane-title">Processes</div>
+                        <div class="pane-content">
+                            PID  NAME     CPU   MEM<br>
+                            1    init     0.1%  2MB<br>
+                            12   sutra    0.2%  4MB<br>
+                            24   desktop  1.2%  8MB<br>
+                            31   shell    0.3%  3MB<br>
+                        </div>
+                    </div>
+                </div>
+                <div class="terminal-statusbar">
+                    <div class="statusbar-left">
+                        <div class="statusbar-item active">
+                            <span class="icon">●</span> 1:shell
+                        </div>
+                        <div class="statusbar-item">
+                            <span class="icon">○</span> 2:notepad
+                        </div>
+                        <div class="statusbar-item">
+                            <span class="icon">○</span> 3:process
+                        </div>
+                    </div>
+                    <div class="statusbar-right">
+                        <div class="statusbar-item">CPU 2.1%</div>
+                        <div class="statusbar-item">MEM 18MB</div>
+                        <div class="statusbar-item">alice@avyos</div>
+                        <div class="statusbar-item">14:32</div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Core Principles</h2>
+            <p>Built from first principles, not legacy constraints</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">शु</div>
+                <h3>Pure Go</h3>
+                <p>One language, zero C dependencies. CGO_ENABLED=0. No hidden complexity, no foreign code paths.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">स</div>
+                <h3>Simple</h3>
+                <p>Minimal by design. Every component does one thing well. No bloat, no abstractions for their own sake.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">द</div>
+                <h3>Auditable</h3>
+                <p>Small codebase you can actually read. Understand the entire system, not just fragments of it.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">र</div>
+                <h3>Secure</h3>
+                <p>Immutable system core. Memory-safe language. No ambient authority. Defense in depth from the ground up.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">न</div>
+                <h3>No Legacy</h3>
+                <p>Clean break from POSIX baggage. Modern interfaces designed for clarity, not decades of compatibility.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon sanskrit">प</div>
+                <h3>Identity-First</h3>
+                <p>Capability-based permissions tied to identity. Apps declare what they need, users grant what they trust.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="filesystem" id="filesystem">
         <div class="container">
-            <div class="terminal-wrapper">
-                <div class="terminal">
-                    <div class="terminal-header">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot yellow"></div>
-                        <div class="terminal-dot green"></div>
+            <div class="section-header">
+                <h2>What We're Redesigning</h2>
+                <p>Rethinking Linux userspace from first principles</p>
+            </div>
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">व</div>
+                    <div class="highlight-content">
+                        <h3>Filesystem Hierarchy</h3>
+                        <p>Immutable /avyos/, mutable /config/ and /users/, kernel interfaces at /cache/. Clear separation of concerns.</p>
                     </div>
-                    <div class="desktop-content">
-                        <div class="desktop-panes">
-                            <div class="pane pane-left focused">
-                                <div class="pane-title">terminal-1</div>
-                                <div class="pane-content">
-                                    <div><span class="prompt">avyos $</span> <span class="command">list /avyos</span>
-                                    </div>
-                                    <div class="output">apps cmd config data services</div>
-                                    <br>
-                                    <div><span class="prompt">avyos $</span> <span class="command">tree
-                                            /avyos/cmd</span></div>
-                                    <div class="output">/avyos/cmd</div>
-                                    <div class="output">├── init</div>
-                                    <div class="output">├── shell</div>
-                                    <div class="output">├── list</div>
-                                    <div class="output">├── read</div>
-                                    <div class="output">├── write</div>
-                                    <div class="output">├── copy</div>
-                                    <div class="output">├── move</div>
-                                    <div class="output">├── delete</div>
-                                    <div class="output">└── ...</div>
-                                    <div><span class="prompt">avyos $</span> <span class="command">_</span></div>
-                                </div>
-                            </div>
-                            <div class="pane-stack">
-                                <div class="pane pane-right-top">
-                                    <div class="pane-title">terminal-2</div>
-                                    <div class="pane-content">
-                                        <div><span class="prompt">avyos $</span> <span class="command">identity
-                                                whoami</span></div>
-                                        <div class="output">alice (uid: 1000)</div>
-                                        <div><span class="prompt">avyos $</span> <span class="command">info
-                                                /users/alice</span></div>
-                                        <div class="output">Type: directory</div>
-                                        <div class="output">Size: 4096 bytes</div>
-                                        <div><span class="prompt">avyos $</span> <span class="command">_</span></div>
-                                    </div>
-                                </div>
-                                <div class="pane pane-right-bottom">
-                                    <div class="pane-title">notepad</div>
-                                    <div class="pane-content">
-                                        <div class="output" style="color: var(--logo-teal);">Welcome to AvyOS!</div>
-                                        <div class="output">───────────────────</div>
-                                        <div class="output"> </div>
-                                        <div class="output">A pure Go operating</div>
-                                        <div class="output">system with a TUI</div>
-                                        <div class="output">desktop environment.</div>
-                                        <div class="output"> </div>
-                                        <div class="output">Press <span style="color:white">Ctrl+A ?</span> for</div>
-                                        <div class="output">keyboard shortcuts.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="desktop-statusbar">
-                            <span class="statusbar-left">terminal-1</span>
-                            <span class="statusbar-center">Ctrl+A ? for help</span>
-                            <span class="statusbar-right">03:45 PM</span>
-                        </div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">प</div>
+                    <div class="highlight-content">
+                        <h3>Identity & Capabilities</h3>
+                        <p>No root, no sudo. Processes run with explicit capability grants tied to user identity.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">उ</div>
+                    <div class="highlight-content">
+                        <h3>Core Utilities</h3>
+                        <p>23 commands in pure Go — init, shell, mount, net, process — zero external dependencies.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">ए</div>
+                    <div class="highlight-content">
+                        <h3>Unified UI Toolkit</h3>
+                        <p>Single codebase for TUI and GUI. 16 widgets, consistent APIs, one abstraction layer.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">स</div>
+                    <div class="highlight-content">
+                        <h3>Sutra IPC</h3>
+                        <p>Message-based IPC with code generation. Type-safe, async, built for services.</p>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon sanskrit">ल</div>
+                    <div class="highlight-content">
+                        <h3>Linux Compatibility</h3>
+                        <p>Run Alpine, Debian, Fedora in isolated containers at /linux/. POSIX when you need it.</p>
+                    </div>
+                </div>
+                <div class="highlight-card planned">
+                    <div class="highlight-icon sanskrit">ध</div>
+                    <div class="highlight-content">
+                        <h3>Framebuffer Graphics <span class="planned-badge">Planned</span></h3>
+                        <p>Direct framebuffer rendering, Wayland-inspired compositor, GPU acceleration.</p>
+                    </div>
+                </div>
+                <div class="highlight-card planned">
+                    <div class="highlight-icon sanskrit">ॐ</div>
+                    <div class="highlight-content">
+                        <h3>Package System <span class="planned-badge">Planned</span></h3>
+                        <p>Atomic updates, content-addressed storage, declarative system configuration.</p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <section id="features" class="features">
-            <div class="container">
-                <h2>Why AvyOS?</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🦫</div>
-                        <h3>Pure Go</h3>
-                        <p>Built with CGO_ENABLED=0. No C toolchain required. The entire userspace compiles with just
-                            the Go compiler.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔒</div>
-                        <h3>Immutable Core</h3>
-                        <p>System files in /avyos/ are read-only. Updates are atomic. Configuration overrides live
-                            separately.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📦</div>
-                        <h3>Non-POSIX</h3>
-                        <p>Clean, modern interfaces without decades of legacy baggage. Linux compatibility via
-                            containers when needed.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🖥️</div>
-                        <h3>TUI Desktop</h3>
-                        <p>Terminal-based tiling window manager with BSP, grid, and spiral layouts. Like tmux meets i3.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🛡️</div>
-                        <h3>Capability-Based</h3>
-                        <p>Applications run with capability restrictions. Fine-grained permissions without root/non-root
-                            dichotomy.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Fast Development</h3>
-                        <p>Go's simplicity makes building and extending the OS enjoyable. Single-developer friendly
-                            codebase.</p>
-                    </div>
+    <section class="status" id="status">
+        <div class="container">
+            <div class="section-header">
+                <h2>Development Status</h2>
+                <p>Current state of AvyOS components</p>
+            </div>
+            <div class="status-grid">
+                <div class="status-row">
+                    <span class="status-name">Boot & Init</span>
+                    <span class="status-badge done">Done</span>
+                    <span class="status-note">Basic init with service manager</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Shell</span>
+                    <span class="status-badge done">Done</span>
+                    <span class="status-note">Interactive shell with builtins</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Sutra IPC</span>
+                    <span class="status-badge done">Done</span>
+                    <span class="status-note">Message bus + code generator</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">TUI Toolkit</span>
+                    <span class="status-badge done">Done</span>
+                    <span class="status-note">16 widgets</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Desktop/WM</span>
+                    <span class="status-badge done">Done</span>
+                    <span class="status-note">BSP, grid, spiral layouts</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Networking</span>
+                    <span class="status-badge basic">Basic</span>
+                    <span class="status-note">Static IPv4 only</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Core Utils</span>
+                    <span class="status-badge basic">Minimal</span>
+                    <span class="status-note">23 commands</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Framebuffer</span>
+                    <span class="status-badge todo">TODO</span>
+                    <span class="status-note">Direct FB rendering</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-name">Audio</span>
+                    <span class="status-badge todo">TODO</span>
+                    <span class="status-note">ALSA or direct hardware</span>
                 </div>
             </div>
-        </section>
-
-        <section id="status" class="status">
-            <div class="container">
-                <h2>Project Status</h2>
-                <table class="status-table">
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Status</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Boot & Init</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>Basic init system with service manager</td>
-                        </tr>
-                        <tr>
-                            <td>Shell</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>Interactive shell with builtins</td>
-                        </tr>
-                        <tr>
-                            <td>IPC</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>Sutra message bus + code generator</td>
-                        </tr>
-                        <tr>
-                            <td>UI Toolkit</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>Terminal UI only</td>
-                        </tr>
-                        <tr>
-                            <td>Desktop Environment</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>Terminal only tiling WM</td>
-                        </tr>
-                        <tr>
-                            <td>Networking</td>
-                            <td><span class="status-badge status-todo">TODO</span></td>
-                            <td>Static IPv4 support only</td>
-                        </tr>
-                        <tr>
-                            <td>Core Utils</td>
-                            <td><span class="status-badge status-basic">Basic</span></td>
-                            <td>23 essential commands</td>
-                        </tr>
-                        <tr>
-                            <td>Audio</td>
-                            <td><span class="status-badge status-todo">TODO</span></td>
-                            <td>ALSA or direct hardware</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="filesystem" class="filesystem">
-            <div class="container">
-                <h2>Filesystem Hierarchy</h2>
-                <div class="fs-container">
-                    <div class="fs-tree">
-                        <div><span class="dir">/</span></div>
-                        <div>├── <span class="dir">avyos/</span> <span class="comment"># Immutable system
-                                (squashfs)</span></div>
-                        <div>│ ├── <span class="dir">cmd/</span> <span class="comment"># Commands (nosuid, nodev)</span>
-                        </div>
-                        <div>│ ├── <span class="dir">config/</span> <span class="comment"># Default configs
-                                (noexec)</span></div>
-                        <div>│ ├── <span class="dir">data/</span> <span class="comment"># Icons, fonts (noexec)</span>
-                        </div>
-                        <div>│ ├── <span class="dir">apps/</span> <span class="comment"># User applications</span></div>
-                        <div>│ └── <span class="dir">services/</span> <span class="comment"># System services</span>
-                        </div>
-                        <div>├── <span class="dir">config/</span> <span class="comment"># Mutable config
-                                overrides</span></div>
-                        <div>├── <span class="dir">users/</span> <span class="comment"># Home directories</span></div>
-                        <div>├── <span class="dir">cache/</span> <span class="comment"># Runtime & kernel
-                                filesystems</span></div>
-                        <div>│ ├── <span class="dir">kernel/</span> <span class="comment"># procfs, sysfs,
-                                devtmpfs</span></div>
-                        <div>│ └── <span class="dir">runtime/</span> <span class="comment"># Runtime state (/run)</span>
-                        </div>
-                        <div>└── <span class="dir">linux/</span> <span class="comment"># Linux compatibility
-                                containers</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <footer>
         <div class="container">
-            <p>Made with ❤️ in India.</p>
+            <div class="logo">AvyOS</div>
+            <div class="links">
+                <a href="https://github.com/user/avyos">GitHub</a>
+                <a href="docs/filesystem.md">Docs</a>
+                <a href="docs/architecture.md">Architecture</a>
+            </div>
+            <p class="copyright">GNU GPL v3.0</p>
         </div>
     </footer>
 </body>
-
 </html>
