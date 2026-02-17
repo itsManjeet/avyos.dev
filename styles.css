@@ -404,14 +404,22 @@ main > section + section {
 }
 
 .pill .dot,
-.summary-list .dot {
+.summary-item .dot {
   width: 8px;
   height: 8px;
   border-radius: 999px;
   display: inline-block;
   flex: 0 0 auto;
+}
+
+.pill .dot {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   box-shadow: 0 0 0 4px rgba(13, 99, 243, 0.16);
+}
+
+.summary-item .dot {
+  background: linear-gradient(135deg, #25c46a, #0ea15b);
+  box-shadow: 0 0 0 4px rgba(37, 196, 106, 0.18);
 }
 
 .card,
@@ -583,25 +591,33 @@ main > section + section {
   gap: var(--space-2);
 }
 
-.summary-list {
-  list-style: none;
-  margin: var(--space-4) 0 0;
-  padding: 0;
+.summary-flow {
+  margin-top: var(--space-4);
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
-.summary-list li {
+.summary-item {
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--glass);
-  padding: 0.82rem 0.9rem;
+  padding: 0.86rem 0.92rem;
+}
+
+.summary-item-head {
   display: flex;
-  align-items: flex-start;
-  gap: 0.64rem;
-  color: var(--muted-strong);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  align-items: center;
+  gap: 0.58rem;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+@media (max-width: 640px) {
+  .summary-flow {
+    grid-template-columns: 1fr;
+  }
 }
 
 .preview-section {
@@ -2138,6 +2154,10 @@ main > section + section {
   gap: var(--space-4);
 }
 
+.try-grid > * {
+  min-width: 0;
+}
+
 @media (max-width: 900px) {
   .try-grid {
     grid-template-columns: 1fr;
@@ -2149,6 +2169,7 @@ main > section + section {
   border-radius: var(--radius-lg);
   background: var(--glass);
   padding: var(--space-4);
+  min-width: 0;
 }
 
 .try-kicker {
@@ -2220,8 +2241,20 @@ main > section + section {
   padding: 0.9rem 1rem;
   font-size: 0.92rem;
   line-height: 1.4;
-  overflow-x: auto;
-  white-space: nowrap;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 560px) {
+  .try-wrap {
+    padding: var(--space-4);
+  }
+
+  .try-panel {
+    padding: var(--space-3);
+  }
 }
 
 .try-note {

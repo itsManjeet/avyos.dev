@@ -112,23 +112,44 @@
         <aside class="hero-right card" aria-label="Project summary">
           <div class="hero-callout">
             <div class="callout-head">
-              <img class="callout-logo" src="assets/logo.png" alt="" width="36" height="36" />
-              <h2>Clear boundaries. Predictable operations.</h2>
+              <h2>Built from scratch purely in GoLang.</h2>
             </div>
             <p>
-              From boot to services, Avyos keeps trust boundaries explicit and system behavior easier to reason about.
+              Avyos is built in pure Golang across the full platform, from the init system to user apps, without libc
+              dependencies or legacy code paths.
             </p>
             <div class="mini-actions">
-              <a class="btn btn-primary" href="#status">Project Status</a>
-              <a class="btn btn-ghost" href="#security">Security Model</a>
+              <a class="btn btn-ghost" href="#status">Project Status</a>
+              <a class="btn btn-release" href="https://github.com/itsmanjeet/avyos">Source Code</a>
             </div>
           </div>
 
-          <ul class="summary-list">
-            <li><span class="dot"></span> Go-native system layer above Linux primitives</li>
-            <li><span class="dot"></span> Capability-first access model</li>
-            <li><span class="dot"></span> Isolated Linux compatibility mode</li>
-          </ul>
+          <div class="summary-flow" aria-label="Project summary details">
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>Init System</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>Core Utils</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>Display Server</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>Window Manager</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>Graphics Framework</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>User Apps</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>System Apps</strong></div>
+            </article>
+            <article class="summary-item">
+              <div class="summary-item-head"><span class="dot"></span><strong>No libc or legacy code</strong></div>
+            </article>
+          </div>
         </aside>
       </div>
     </section>
@@ -466,7 +487,6 @@
                 <p class="arch-kicker">Reference architecture</p>
                 <h3>Layered system model</h3>
               </div>
-              <a class="arch-doc-link" href="architecture.md">Open architecture.md</a>
             </div>
             <p class="arch-caption">Trusted boundaries and runtime contracts from kernel to user-facing workloads.</p>
 
@@ -474,7 +494,7 @@
               <section class="arch-layer-item auth-l3">
                 <div class="arch-layer-head">
                   <h4>Compatibility layer</h4>
-                  <div class="arch-auth-visual level-3" role="img" aria-label="Auth level: Isolated Compatibility">
+                  <div class="arch-auth-visual level-1" role="img" aria-label="Auth level: Isolated Compatibility">
                     <span></span><span></span><span></span><span></span><span></span>
                   </div>
                 </div>
@@ -578,8 +598,6 @@
     <section id="status" class="section-block">
       <div class="container">
         <h2 class="section-title">Project status</h2>
-        <p class="section-sub">v0 "Virtual Monster" timeline with completed milestones and remaining release scope.</p>
-
         <article class="card status-hero">
           <p class="status-kicker">v0 release scope</p>
           <h3>Execution snapshot for Alpha</h3>

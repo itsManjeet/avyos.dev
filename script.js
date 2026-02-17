@@ -215,16 +215,8 @@ function buildGroupCard(group) {
     const li = document.createElement("li");
     li.className = `group-item ${itemStatus}`;
 
-    const hasDocs = typeof item.docs === "string" && item.docs.trim() !== "";
-    const itemContainer = hasDocs ? document.createElement("a") : document.createElement("div");
+    const itemContainer = document.createElement("div");
     itemContainer.className = "group-item-link";
-    if (hasDocs) {
-      itemContainer.href = item.docs;
-      if (/^https?:\/\//.test(item.docs)) {
-        itemContainer.target = "_blank";
-        itemContainer.rel = "noopener noreferrer";
-      }
-    }
 
     const row = document.createElement("div");
     row.className = "group-row";
@@ -265,9 +257,6 @@ function setupMilestoneInteractions() {
   };
 
   milestoneBoardEl.addEventListener("click", (event) => {
-    if (event.target.closest(".group-item-link")) {
-      return;
-    }
     const card = event.target.closest(".milestone-card");
     if (!card || !milestoneBoardEl.contains(card)) {
       return;
@@ -277,9 +266,6 @@ function setupMilestoneInteractions() {
 
   milestoneBoardEl.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") {
-      return;
-    }
-    if (event.target.closest(".group-item-link")) {
       return;
     }
     const card = event.target.closest(".milestone-card");

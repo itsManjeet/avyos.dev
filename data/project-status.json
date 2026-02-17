@@ -1,63 +1,59 @@
 {
-  "helpText": "Grouped by domain. Hover or tap a card to expand. Green tick = done, grey dash = not done.",
   "groups": [
     {
       "title": "Core Infrastructure",
       "status": "complete",
       "items": [
         {
-          "title": "Coreutils",
-          "status": "done",
-          "description": "Core command set for system operations and developer workflows.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd"
-        },
-        {
           "title": "Init system",
           "status": "done",
-          "description": "PID 1 lifecycle management and supervised service startup.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd/init"
+          "description": "PID 1 lifecycle management and supervised service startup."
         },
         {
           "title": "Sutra IPC",
           "status": "done",
-          "description": "Service-to-service messaging bus and runtime communication layer.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/pkg/sutra"
+          "description": "Service-to-service messaging bus and runtime communication layer."
+        },
+        {
+          "title": "Coreutils",
+          "status": "basic",
+          "description": "Core command set for system operations and developer workflows."
         },
         {
           "title": "Build pipeline",
           "status": "done",
-          "description": "Image build flow for compile, packaging, and boot artifact generation.",
-          "docs": "https://github.com/itsmanjeet/avyos/blob/main/Makefile"
+          "description": "Image build flow for compile, packaging, and boot artifact generation."
         }
       ]
     },
     {
       "title": "Graphics",
-      "status": "complete",
+      "status": "basic",
       "items": [
         {
           "title": "Display protocol",
           "status": "done",
-          "description": "Native display protocol layer for Avyos compositor and clients.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+          "description": "Native display protocol layer for Avyos compositor and clients."
         },
         {
           "title": "Graphics framework",
           "status": "done",
-          "description": "Rendering and UI primitives for system graphics and app surfaces.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/pkg/ui"
+          "description": "Rendering and UI primitives for system graphics and app surfaces."
         },
         {
           "title": "Display server",
           "status": "done",
-          "description": "Compositor service handling session rendering and window composition.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/services/desktop"
+          "description": "Compositor service handling session rendering and window composition."
         },
         {
           "title": "System + user apps",
           "status": "done",
-          "description": "User-facing application layer delivered with the desktop baseline.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/apps"
+          "description": "User-facing application layer delivered with the desktop baseline."
+        },
+        {
+          "title": "Hardware Acceleration",
+          "status": "not",
+          "description": "Hardware accelerated graphics with vulkan"
         }
       ]
     },
@@ -68,8 +64,27 @@
         {
           "title": "Static IPv4 Ethernet",
           "status": "done",
-          "description": "Basic static IPv4 Ethernet setup is available for current runtime use.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/cmd/net"
+          "description": "Basic static IPv4 Ethernet setup is available for current runtime use."
+        },
+        {
+          "title": "Dynamic IP address with ipv6",
+          "status": "not",
+          "description": "Support for dynamic ip assign and ipv6 support"
+        },
+        {
+          "title": "Wifi support",
+          "status": "not",
+          "description": "Support for opensource wifi hardware"
+        },
+        {
+          "title": "Network Manager tool",
+          "status": "not",
+          "description": "Proper user, system tools and services for network management"
+        },
+        {
+          "title": "Redesigned Web and Engine",
+          "status": "not",
+          "description": "redesigned web and engine"
         }
       ]
     },
@@ -80,26 +95,39 @@
         {
           "title": "None",
           "status": "not",
-          "description": "Audio stack is not implemented yet for v0 release scope.",
-          "docs": "https://github.com/itsmanjeet/avyos/issues?q=is%3Aissue+audio"
+          "description": "Audio stack is not implemented yet."
         }
       ]
     },
     {
-      "title": "Compatibility (QA)",
+      "title": "Video",
+      "status": "off",
+      "items": [
+        {
+          "title": "None",
+          "status": "not",
+          "description": "Video stack is not implemented yet."
+        }
+      ]
+    },
+    {
+      "title": "Compatibility",
       "status": "basic",
       "items": [
         {
           "title": "Wayland bridge",
           "status": "not",
-          "description": "Bridge path under QA to map Wayland clients into Avyos display flow.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+          "description": "Bridge path under QA to map Wayland clients into Avyos display flow."
         },
         {
           "title": "Distro container",
           "status": "not",
-          "description": "Container-based compatibility path under QA for Linux distribution workloads.",
-          "docs": "https://github.com/itsmanjeet/avyos/tree/main/docs"
+          "description": "Container-based compatibility path under QA for Linux distribution workloads."
+        },
+        {
+          "title": "Resource reuse",
+          "status": "not",
+          "description": "Framework to reuse proprietary resources for graphics and codecs"
         }
       ]
     },
@@ -108,16 +136,19 @@
       "status": "basic",
       "items": [
         {
-          "title": "QEMU arm64",
+          "title": "QEMU arm64 and amd64",
           "status": "done",
-          "description": "Primary virtualization target for arm64 build and boot validation.",
-          "docs": "architecture.md"
+          "description": "Primary virtualization target for arm64 (aarch64) and amd64 (x86_64) build and boot validation."
         },
         {
-          "title": "QEMU amd64",
-          "status": "done",
-          "description": "Secondary virtualization target for amd64 compatibility and runtime testing.",
-          "docs": "architecture.md"
+          "title": "Desktop and Laptops",
+          "status": "not",
+          "description": "Proper support for generic real desktop and laptop systems."
+        },
+        {
+          "title": "Embedded",
+          "status": "not",
+          "description": "Support for embedded devices (primarly raspberry pi)"
         }
       ]
     }
