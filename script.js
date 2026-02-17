@@ -357,12 +357,11 @@ void loadAndRenderProjectStatus();
 initializeMotionReveal();
 
 const PREVIEW_IMAGES = [
-  { src: "assets/interface.png", label: "System Interface" },
-  { src: "assets/task-manager.png", label: "Task Manager" },
-  { src: "assets/terminal-app.png", label: "Terminal App" },
+  { src: "assets/app-menu.png", label: "App menu" },
   { src: "assets/file-manager.png", label: "File Manager" },
-  { src: "assets/notepad.png", label: "Notepad" },
+  { src: "assets/interface.png", label: "System Interface" },
   { src: "assets/login-screen.png", label: "Login Screen" },
+  { src: "assets/terminal-app.png", label: "Terminal App" },
   { src: "assets/user-setup.png", label: "User Setup" },
   { src: "assets/welcome-screen.png", label: "Welcome Screen" },
 ].map((item) => ({
