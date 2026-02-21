@@ -169,7 +169,7 @@ function normalizeGroupStatus(status) {
 }
 
 function normalizeItemStatus(status) {
-  if (status === "done" || status === "not") {
+  if (status === "done" || status === "basic" || status === "not") {
     return status;
   }
   return "not";
@@ -296,16 +296,22 @@ function renderProjectStatus(config) {
   }
 
   const groups = Array.isArray(config.groups) ? config.groups : [];
-  const counts = { complete: 0, basic: 0, off: 0 };
+  const itemCounts = { done: 0, basic: 0, not: 0 };
+  let totalTasks = 0;
+
   groups.forEach((group) => {
-    counts[normalizeGroupStatus(group.status)] += 1;
+    const items = Array.isArray(group.items) ? group.items : [];
+    totalTasks += items.length;
+    items.forEach((item) => {
+      itemCounts[normalizeItemStatus(item.status)] += 1;
+    });
   });
 
   statusSummaryEl.replaceChildren(
-    createStatusMeter(counts.complete, "Complete"),
-    createStatusMeter(counts.basic, "Basic support"),
-    createStatusMeter(counts.off, "Not done"),
-    createStatusMeter(groups.length, "Total groups"),
+    createStatusMeter(itemCounts.done, "Completed tasks"),
+    createStatusMeter(itemCounts.basic, "Basic support"),
+    createStatusMeter(itemCounts.not, "Not done"),
+    createStatusMeter(totalTasks, "Total tasks"),
   );
 
   milestoneHelpEl.textContent =

@@ -2026,12 +2026,37 @@ main > section + section {
   content: "\2713";
 }
 
+.group-item.basic .group-mark {
+  color: #f4b43c;
+}
+
+.group-item.basic .group-mark::before {
+  content: "~";
+}
+
 .group-item.not .group-mark {
   color: #8a95ab;
 }
 
 .group-item.not .group-mark::before {
   content: "-";
+}
+
+.group-item.not .group-item-link {
+  opacity: 0.58;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.group-item.not .group-link {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.group-item.not .group-desc {
+  color: color-mix(in oklab, var(--muted) 86%, transparent);
 }
 
 .group-desc {
