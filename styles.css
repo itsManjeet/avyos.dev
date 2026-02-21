@@ -2145,7 +2145,27 @@ main > section + section {
 }
 
 .try-wrap .section-sub {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
+}
+
+.try-notice {
+  margin: 0 0 var(--space-5);
+  border: 1px solid color-mix(in oklab, #f59e0b 36%, var(--border));
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, #f59e0b 10%, var(--bg-alt));
+  padding: 0.72rem 0.88rem;
+  color: var(--muted-strong);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.try-notice strong {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 0.88rem;
+  letter-spacing: -0.01em;
+  margin-right: 0.24rem;
 }
 
 .try-grid {
